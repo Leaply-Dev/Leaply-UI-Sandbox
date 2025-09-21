@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile - Leaply</title>
+    <meta name="description" content="Track your application progress and manage your international education journey with Leaply's student portal.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+    
+    <style>
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+            color: white;
+            padding: var(--space-2xl) 0;
+            margin-top: 80px;
+        }
+        
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xl);
+            flex-wrap: wrap;
+        }
+        
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .profile-details h1 {
+            margin-bottom: var(--space-sm);
+            color: white;
+        }
+        
+        .profile-meta {
+            display: flex;
+            gap: var(--space-lg);
+            flex-wrap: wrap;
+            margin-top: var(--space-md);
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .dashboard-nav {
+            background-color: var(--background-white);
+            box-shadow: var(--shadow-sm);
+            padding: var(--space-lg) 0;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+            overflow-x: auto;
+        }
+        
+        .nav-tab {
+            padding: var(--space-sm) var(--space-lg);
+            text-decoration: none;
+            color: var(--text-gray);
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tab.active {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+        }
+        
+        .nav-tab:hover {
+            color: var(--primary-green);
+        }
+        
+        .dashboard-content {
+            padding: var(--space-2xl) 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .stat-card {
+            background-color: var(--background-white);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--primary-green);
+            display: block;
+        }
+        
+        .stat-label {
+            color: var(--text-gray);
+            margin-top: var(--space-sm);
+        }
+        
+        .progress-section {
+            background-color: var(--background-white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-2xl);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-xl);
+        }
+        
+        .progress-percentage {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+        
+        .step-card {
+            background-color: var(--section-gray);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-md);
+            border-left: 4px solid var(--light-gray);
+            transition: all 0.3s ease;
+        }
+        
+        .step-card.completed {
+            border-left-color: var(--primary-green);
+            background-color: rgba(141, 198, 65, 0.05);
+        }
+        
+        .step-card.active {
+            border-left-color: var(--primary-green);
+            background-color: var(--background-white);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+        
+        .step-status {
+            font-size: var(--font-size-sm);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-weight: 500;
+        }
+        
+        .status-completed {
+            background-color: var(--dark-green);
+            color: white;
+        }
+        
+        .status-active {
+            background-color: rgba(141, 198, 65, 0.1);
+            color: var(--primary-green);
+        }
+        
+        .status-pending {
+            background-color: var(--light-gray);
+            color: var(--text-gray);
+        }
+        
+        .application-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+            padding: var(--space-lg);
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-md);
+            transition: all 0.3s ease;
+        }
+        
+        .application-card:hover {
+            border-color: var(--primary-green);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .app-logo {
+            width: 60px;
+            height: 60px;
+            background-color: var(--section-gray);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .app-details {
+            flex: 1;
+        }
+        
+        .app-name {
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .app-program {
+            color: var(--text-gray);
+            font-size: var(--font-size-sm);
+        }
+        
+        .app-status {
+            text-align: right;
+        }
+        
+        .app-deadline {
+            font-size: var(--font-size-sm);
+            color: var(--text-gray);
+            margin-bottom: var(--space-xs);
+        }
+        
+        .recommendation-card {
+            background: linear-gradient(135deg, var(--background-white) 0%, var(--section-gray) 100%);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-md);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .recommendation-card:hover {
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+        
+        .recommendation-header {
+            display: flex;
+            justify-content: between;
+            align-items: flex-start;
+            margin-bottom: var(--space-md);
+        }
+        
+        .recommendation-match {
+            background-color: var(--primary-green);
+            color: white;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            margin-left: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-info {
+                text-align: center;
+                flex-direction: column;
+            }
+            
+            .profile-meta {
+                justify-content: center;
+            }
+            
+            .nav-tabs {
+                padding: 0 var(--space-md);
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .application-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .app-status {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-l">L</span>eaply
+            </a>
+            
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="search.html" class="nav-link">Universities</a></li>
+                    <li><a href="search.html#scholarships" class="nav-link">Scholarships</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li><a href="#" class="btn btn-primary active">Student Portal</a></li>
+                </ul>
+            </nav>
+            
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </header>
+
+    <!-- Profile Header -->
+    <section class="profile-header">
+        <div class="container">
+            <div class="profile-info">
+                <div class="profile-avatar">👨‍🎓</div>
+                <div class="profile-details">
+                    <h1>Alex Johnson</h1>
+                    <p>Computer Science Student • Class of 2025</p>
+                    <div class="profile-meta">
+                        <div class="meta-item">
+                            <span>📍</span>
+                            <span>San Francisco, CA</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>🎯</span>
+                            <span>Target: Masters in AI/ML</span>
+                        </div>
+                        <div class="meta-item">
+                            <span>📊</span>
+                            <span>GPA: 3.8/4.0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Navigation -->
+    <nav class="dashboard-nav">
+        <div class="container">
+            <ul class="nav-tabs">
+                <li><a href="#overview" class="nav-tab active">Overview</a></li>
+                <li><a href="#applications" class="nav-tab">Applications</a></li>
+                <li><a href="#recommendations" class="nav-tab">Recommendations</a></li>
+                <li><a href="#documents" class="nav-tab">Documents</a></li>
+                <li><a href="#timeline" class="nav-tab">Timeline</a></li>
+                <li><a href="#profile-settings" class="nav-tab">Settings</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <section class="dashboard-content">
+        <div class="container">
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">12</span>
+                        <p class="stat-label">Applications Started</p>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">8</span>
+                        <p class="stat-label">Applications Submitted</p>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">3</span>
+                        <p class="stat-label">Acceptances</p>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">$45K</span>
+                        <p class="stat-label">Scholarship Offers</p>
+                    </div>
+                </div>
+
+                <!-- Application Progress -->
+                <div class="progress-section">
+                    <div class="progress-header">
+                        <h2>Application Progress</h2>
+                        <span class="progress-percentage">67% Complete</span>
+                    </div>
+                    
+                    <div class="progress-tracker">
+                        <div class="progress-step completed">1</div>
+                        <div class="progress-step completed">2</div>
+                        <div class="progress-step completed">3</div>
+                        <div class="progress-step active">4</div>
+                        <div class="progress-step">5</div>
+                        <div class="progress-step">6</div>
+                    </div>
+                    
+                    <div class="steps-list">
+                        <div class="step-card completed">
+                            <div class="step-header">
+                                <span class="step-title">1. Profile Setup</span>
+                                <span class="step-status status-completed">Completed</span>
+                            </div>
+                            <p>Basic information, academic background, and preferences configured.</p>
+                        </div>
+                        
+                        <div class="step-card completed">
+                            <div class="step-header">
+                                <span class="step-title">2. University Research</span>
+                                <span class="step-status status-completed">Completed</span>
+                            </div>
+                            <p>Identified 15 target universities and 8 scholarship opportunities.</p>
+                        </div>
+                        
+                        <div class="step-card completed">
+                            <div class="step-header">
+                                <span class="step-title">3. Document Preparation</span>
+                                <span class="step-status status-completed">Completed</span>
+                            </div>
+                            <p>Transcripts, test scores, and letters of recommendation gathered.</p>
+                        </div>
+                        
+                        <div class="step-card active">
+                            <div class="step-header">
+                                <span class="step-title">4. Application Submission</span>
+                                <span class="step-status status-active">In Progress</span>
+                            </div>
+                            <p>Submitting applications to target universities. 8 of 12 completed.</p>
+                            <div class="mt-md">
+                                <a href="#applications" class="btn btn-primary">Continue Applications</a>
+                            </div>
+                        </div>
+                        
+                        <div class="step-card">
+                            <div class="step-header">
+                                <span class="step-title">5. Interview Preparation</span>
+                                <span class="step-status status-pending">Pending</span>
+                            </div>
+                            <p>Prepare for admission interviews and scholarship evaluations.</p>
+                        </div>
+                        
+                        <div class="step-card">
+                            <div class="step-header">
+                                <span class="step-title">6. Decision & Enrollment</span>
+                                <span class="step-status status-pending">Pending</span>
+                            </div>
+                            <p>Review offers, make final decisions, and complete enrollment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="section">
+                    <h2>Recent Activity</h2>
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <h3>New Recommendation</h3>
+                            <p>Based on your profile, we found 3 new universities that match your criteria.</p>
+                            <a href="#recommendations" class="btn btn-secondary">View Recommendations</a>
+                        </div>
+                        <div class="card">
+                            <h3>Deadline Reminder</h3>
+                            <p>MIT application deadline is in 5 days. Don't forget to submit your final documents.</p>
+                            <a href="#applications" class="btn btn-primary">Review Application</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applications Tab -->
+            <div id="applications" class="tab-content hidden">
+                <h2>My Applications</h2>
+                <p class="text-secondary mb-xl">Track the status of all your university and scholarship applications.</p>
+                
+                <div class="applications-list">
+                    <div class="application-card">
+                        <div class="app-logo">🏛️</div>
+                        <div class="app-details">
+                            <div class="app-name">Massachusetts Institute of Technology</div>
+                            <div class="app-program">Master's in Computer Science</div>
+                        </div>
+                        <div class="app-status">
+                            <div class="app-deadline">Deadline: Dec 15, 2024</div>
+                            <span class="step-status status-active">In Progress</span>
+                        </div>
+                    </div>
+                    
+                    <div class="application-card">
+                        <div class="app-logo">🌟</div>
+                        <div class="app-details">
+                            <div class="app-name">Stanford University</div>
+                            <div class="app-program">MS in Artificial Intelligence</div>
+                        </div>
+                        <div class="app-status">
+                            <div class="app-deadline">Deadline: Dec 1, 2024</div>
+                            <span class="step-status status-completed">Submitted</span>
+                        </div>
+                    </div>
+                    
+                    <div class="application-card">
+                        <div class="app-logo">🏫</div>
+                        <div class="app-details">
+                            <div class="app-name">Carnegie Mellon University</div>
+                            <div class="app-program">MS in Machine Learning</div>
+                        </div>
+                        <div class="app-status">
+                            <div class="app-deadline">Deadline: Jan 15, 2025</div>
+                            <span class="step-status status-pending">Not Started</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendations Tab -->
+            <div id="recommendations" class="tab-content hidden">
+                <h2>Personalized Recommendations</h2>
+                <p class="text-secondary mb-xl">Universities and scholarships matched to your profile and preferences.</p>
+                
+                <div class="recommendations-list">
+                    <div class="recommendation-card">
+                        <div class="recommendation-header">
+                            <h3>University of Washington</h3>
+                            <span class="recommendation-match">95% Match</span>
+                        </div>
+                        <p class="card-location">📍 Seattle, Washington, USA</p>
+                        <p>Strong computer science program with excellent AI/ML research opportunities. Great fit for your academic background and career goals.</p>
+                        <div class="mt-md">
+                            <a href="#" class="btn btn-primary">Add to Applications</a>
+                            <a href="#" class="btn btn-secondary">Learn More</a>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendation-card">
+                        <div class="recommendation-header">
+                            <h3>Google Research Scholarship</h3>
+                            <span class="recommendation-match">92% Match</span>
+                        </div>
+                        <p class="card-location">💰 $50,000 + Mentorship</p>
+                        <p>Scholarship for outstanding students pursuing graduate studies in computer science and related fields.</p>
+                        <div class="mt-md">
+                            <a href="#" class="btn btn-primary">Apply Now</a>
+                            <a href="#" class="btn btn-secondary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documents Tab -->
+            <div id="documents" class="tab-content hidden">
+                <h2>Document Management</h2>
+                <p class="text-secondary mb-xl">Upload and organize all your application documents in one place.</p>
+                
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h3>📜 Transcripts</h3>
+                        <p>Official academic transcripts</p>
+                        <span class="step-status status-completed">Complete</span>
+                    </div>
+                    <div class="card">
+                        <h3>📋 Test Scores</h3>
+                        <p>GRE, TOEFL, IELTS scores</p>
+                        <span class="step-status status-completed">Complete</span>
+                    </div>
+                    <div class="card">
+                        <h3>📝 Essays</h3>
+                        <p>Personal statements and essays</p>
+                        <span class="step-status status-active">In Progress</span>
+                    </div>
+                    <div class="card">
+                        <h3>📄 Recommendations</h3>
+                        <p>Letters of recommendation</p>
+                        <span class="step-status status-pending">Pending</span>
+                    </div>
+                    <div class="card">
+                        <h3>💼 Portfolio</h3>
+                        <p>Projects and work samples</p>
+                        <span class="step-status status-completed">Complete</span>
+                    </div>
+                    <div class="card">
+                        <h3>🆔 Identity</h3>
+                        <p>Passport and visa documents</p>
+                        <span class="step-status status-completed">Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Leaply</h4>
+                    <p>Your trusted partner for international education.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>📧 support@leaply.com</p>
+                    <p>📞 +1 (555) 123-4567</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Leaply. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Tab Navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navTabs = document.querySelectorAll('.nav-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all tabs and contents
+                    navTabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.add('hidden'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetContent = document.getElementById(targetId);
+                    if (targetContent) {
+                        targetContent.classList.remove('hidden');
+                    }
+                });
+            });
+            
+            // Initialize progress tracking
+            updateProgress(3); // 3 steps completed
+        });
+    </script>
+</body>
+</html>

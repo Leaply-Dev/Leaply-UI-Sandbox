@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Leaply - Get Support for Your International Education Journey</title>
+    <meta name="description" content="Get in touch with Leaply's support team. We're here to help with your international education journey, applications, and any questions you may have.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-l">L</span>eaply
+            </a>
+            
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="search.html" class="nav-link">Universities</a></li>
+                    <li><a href="search.html#scholarships" class="nav-link">Scholarships</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="#" class="nav-link active">Contact</a></li>
+                    <li><a href="profile.html" class="btn btn-primary">Student Portal</a></li>
+                </ul>
+            </nav>
+            
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="search.html" class="nav-link">Universities</a></li>
+                <li><a href="search.html#scholarships" class="nav-link">Scholarships</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="#" class="nav-link active">Contact</a></li>
+                <li><a href="profile.html" class="btn btn-primary">Student Portal</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Get in Touch</h1>
+                <p class="tagline">We're here to support you every step of the way on your international education journey.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Information -->
+    <section class="section">
+        <div class="container">
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="card-icon">📧</div>
+                    <h3>Email Support</h3>
+                    <p>Get personalized assistance from our education experts.</p>
+                    <a href="mailto:support@leaply.com" class="btn btn-secondary">support@leaply.com</a>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📞</div>
+                    <h3>Phone Support</h3>
+                    <p>Speak directly with our counselors during business hours.</p>
+                    <a href="tel:+15551234567" class="btn btn-secondary">+1 (555) 123-4567</a>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💬</div>
+                    <h3>Live Chat</h3>
+                    <p>Get instant answers to your questions through our live chat.</p>
+                    <button class="btn btn-secondary" onclick="openChat()">Start Chat</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="section section-gray">
+        <div class="container">
+            <div class="grid grid-2">
+                <div class="form-section">
+                    <h2>Send Us a Message</h2>
+                    <p class="text-secondary mb-xl">Fill out the form below and we'll get back to you within 24 hours.</p>
+                    
+                    <form class="contact-form" id="contactForm">
+                        <div class="grid grid-2">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">First Name *</label>
+                                <input type="text" id="firstName" name="firstName" class="form-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">Last Name *</label>
+                                <input type="text" id="lastName" name="lastName" class="form-input" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email Address *</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="inquiryType" class="form-label">Inquiry Type *</label>
+                            <select id="inquiryType" name="inquiryType" class="form-select" required>
+                                <option value="">Select an inquiry type</option>
+                                <option value="general">General Information</option>
+                                <option value="application">Application Support</option>
+                                <option value="scholarships">Scholarship Questions</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="partnership">University Partnership</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="currentStatus" class="form-label">Current Status</label>
+                            <select id="currentStatus" name="currentStatus" class="form-select">
+                                <option value="">Select your current status</option>
+                                <option value="high-school">High School Student</option>
+                                <option value="undergraduate">Undergraduate Student</option>
+                                <option value="graduate">Graduate Student</option>
+                                <option value="working">Working Professional</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="targetCountry" class="form-label">Target Study Country</label>
+                            <select id="targetCountry" name="targetCountry" class="form-select">
+                                <option value="">Select a country</option>
+                                <option value="usa">United States</option>
+                                <option value="uk">United Kingdom</option>
+                                <option value="canada">Canada</option>
+                                <option value="australia">Australia</option>
+                                <option value="germany">Germany</option>
+                                <option value="netherlands">Netherlands</option>
+                                <option value="france">France</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message *</label>
+                            <textarea id="message" name="message" class="form-textarea" rows="6" placeholder="Please describe your inquiry or question in detail..." required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="newsletter" name="newsletter">
+                                <span class="checkmark"></span>
+                                Subscribe to our newsletter for education tips and updates
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-large">Send Message</button>
+                    </form>
+                </div>
+                
+                <div class="info-section">
+                    <h2>Why Contact Us?</h2>
+                    <div class="contact-benefits">
+                        <div class="benefit-item">
+                            <span class="benefit-icon">🎯</span>
+                            <div>
+                                <h4>Personalized Guidance</h4>
+                                <p>Get tailored advice based on your unique academic background and career goals.</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">⚡</span>
+                            <div>
+                                <h4>Quick Response</h4>
+                                <p>We respond to all inquiries within 24 hours, often much sooner.</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">🏆</span>
+                            <div>
+                                <h4>Expert Advice</h4>
+                                <p>Our team includes former admissions officers and international education experts.</p>
+                            </div>
+                        </div>
+                        <div class="benefit-item">
+                            <span class="benefit-icon">🆓</span>
+                            <div>
+                                <h4>Free Consultation</h4>
+                                <p>Initial consultations and basic guidance are always free of charge.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="office-hours">
+                        <h3>Office Hours</h3>
+                        <div class="hours-list">
+                            <div class="hours-item">
+                                <span>Monday - Friday</span>
+                                <span>9:00 AM - 6:00 PM PST</span>
+                            </div>
+                            <div class="hours-item">
+                                <span>Saturday</span>
+                                <span>10:00 AM - 4:00 PM PST</span>
+                            </div>
+                            <div class="hours-item">
+                                <span>Sunday</span>
+                                <span>Closed</span>
+                            </div>
+                        </div>
+                        <p class="hours-note">For urgent matters outside business hours, please email us and we'll respond as soon as possible.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center mb-xl">Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3 class="faq-question">How much does Leaply cost?</h3>
+                    <p class="faq-answer">Leaply offers both free and premium services. Basic university and scholarship search is completely free. Our premium services include personalized counseling, application review, and interview preparation.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Do you help with visa applications?</h3>
+                    <p class="faq-answer">While we don't directly handle visa applications, we provide comprehensive guidance on the visa process and can connect you with certified immigration consultants when needed.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Can you guarantee admission or scholarships?</h3>
+                    <p class="faq-answer">We cannot guarantee admissions or scholarships as these decisions are made by universities and scholarship committees. However, we significantly improve your chances through expert guidance and personalized strategies.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">How accurate is your matching algorithm?</h3>
+                    <p class="faq-answer">Our AI-powered matching algorithm has a 95% accuracy rate based on student feedback. It considers over 50 factors including academic profile, interests, career goals, and personal preferences.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">Do you work with students from all countries?</h3>
+                    <p class="faq-answer">Yes, we work with students from over 150 countries worldwide. Our platform supports multiple languages and we understand the unique challenges faced by international students.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 class="faq-question">How long does the application process take?</h3>
+                    <p class="faq-answer">The timeline varies depending on your target universities and programs. Typically, we recommend starting the process 12-18 months before your intended start date to ensure ample time for preparation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Office Location -->
+    <section class="section section-gray">
+        <div class="container">
+            <div class="grid grid-2">
+                <div class="location-info">
+                    <h2>Visit Our Office</h2>
+                    <div class="address-card">
+                        <h3>Leaply Headquarters</h3>
+                        <p>📍 123 Education Street<br>
+                        Learning City, LC 12345<br>
+                        United States</p>
+                        
+                        <div class="contact-details">
+                            <p>📧 support@leaply.com</p>
+                            <p>📞 +1 (555) 123-4567</p>
+                            <p>🌐 www.leaply.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="directions">
+                        <h4>Getting Here</h4>
+                        <p>Our office is conveniently located in the heart of the Education District, easily accessible by public transport. The nearest metro station is Learning Center Station (Blue Line), just a 3-minute walk from our office.</p>
+                        <p>Visitor parking is available in the building garage with validation.</p>
+                    </div>
+                </div>
+                
+                <div class="map-placeholder">
+                    <div style="background-color: var(--section-gray); border: 2px dashed var(--light-gray); border-radius: var(--radius-lg); height: 400px; display: flex; align-items: center; justify-content: center; color: var(--text-gray);">
+                        <div style="text-align: center;">
+                            <div style="font-size: 3rem; margin-bottom: var(--space-md);">🗺️</div>
+                            <p>Interactive Map</p>
+                            <p style="font-size: var(--font-size-sm);">Map integration would be implemented here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Leaply</h4>
+                    <p>Your trusted partner for international education. Connecting ambitious students with world-class opportunities since 2024.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="search.html">University Search</a></li>
+                        <li><a href="search.html?type=scholarships">Scholarship Search</a></li>
+                        <li><a href="profile.html">Application Tracking</a></li>
+                        <li><a href="#">Counseling Services</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>📧 support@leaply.com</p>
+                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📍 123 Education St, Learning City, LC 12345</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Leaply. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <style>
+        .benefit-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .benefit-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .benefit-item h4 {
+            margin-bottom: var(--space-xs);
+        }
+        
+        .office-hours {
+            background-color: var(--background-white);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-top: var(--space-xl);
+        }
+        
+        .hours-list {
+            margin: var(--space-lg) 0;
+        }
+        
+        .hours-item {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-sm) 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .hours-item:last-child {
+            border-bottom: none;
+        }
+        
+        .hours-note {
+            font-size: var(--font-size-sm);
+            color: var(--text-gray);
+            margin-top: var(--space-md);
+        }
+        
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--space-xl);
+        }
+        
+        .faq-item {
+            background-color: var(--background-white);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .faq-question {
+            color: var(--primary-green);
+            margin-bottom: var(--space-md);
+            font-size: var(--font-size-lg);
+        }
+        
+        .faq-answer {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+        
+        .address-card {
+            background-color: var(--background-white);
+            padding: var(--space-xl);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .contact-details {
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .contact-details p {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .directions h4 {
+            color: var(--primary-green);
+            margin-bottom: var(--space-md);
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            line-height: 1.4;
+        }
+        
+        .checkbox-label input[type="checkbox"] {
+            margin: 0;
+            width: auto;
+        }
+        
+        .contact-form {
+            background-color: var(--background-white);
+            padding: var(--space-2xl);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+        }
+        
+        @media (max-width: 768px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-form {
+                padding: var(--space-xl);
+            }
+            
+            .hours-item {
+                flex-direction: column;
+                gap: var(--space-xs);
+            }
+        }
+    </style>
+    
+    <script>
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic form validation is handled by the main.js file
+            // Here we would typically send the form data to a server
+            
+            // Simulate form submission
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                // Show success message
+                showToast('Message sent successfully! We\'ll get back to you within 24 hours.', 'success');
+                
+                // Reset form
+                this.reset();
+                
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+        
+        // Open chat function
+        function openChat() {
+            // In a real implementation, this would open a chat widget
+            showToast('Live chat feature coming soon! Please use email or phone for now.', 'info');
+        }
+    </script>
+</body>
+</html>

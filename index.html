@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaply - Your Gateway to International Education</title>
+    <meta name="description" content="Find your perfect university or scholarship abroad with Leaply's intelligent matching platform. Get personalized guidance for your international education journey.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Favicon placeholder -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">
+                <span class="logo-l">L</span>eaply
+            </a>
+            
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#universities" class="nav-link">Universities</a></li>
+                    <li><a href="#scholarships" class="nav-link">Scholarships</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                    <li><a href="profile.html" class="btn btn-primary">Student Portal</a></li>
+                </ul>
+            </nav>
+            
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav">
+            <ul class="nav-list">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#universities" class="nav-link">Universities</a></li>
+                <li><a href="#scholarships" class="nav-link">Scholarships</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="profile.html" class="btn btn-primary">Student Portal</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-logo"></div>
+                <h1>Your Gateway to International Education</h1>
+                <p class="tagline">Discover universities and scholarships abroad with our intelligent matching platform. From application to acceptance, we guide you every step of the way.</p>
+                <a href="search.html" class="btn btn-primary btn-large">Find Your Match</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center mb-xl">Why Choose Leaply?</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>Smart Matching Algorithm</h3>
+                    <p class="card-description">Our AI-powered system analyzes your academic profile, interests, and goals to find the perfect universities and scholarships that match your potential.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📋</div>
+                    <h3>A-Z Application Guidance</h3>
+                    <p class="card-description">From initial research to final submission, get step-by-step guidance through every part of your application process with personalized checklists and deadlines.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💰</div>
+                    <h3>Scholarship Opportunities</h3>
+                    <p class="card-description">Access thousands of scholarship opportunities worldwide. We help you find and apply for funding that makes your international education dreams affordable.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Organic Divider -->
+    <div class="section-divider"></div>
+
+    <!-- Featured Universities -->
+    <section class="section section-gray">
+        <div class="container">
+            <h2 class="text-center mb-xl">Featured Universities</h2>
+            <div class="grid grid-3">
+                <div class="card university-card" data-country="usa" data-type="university">
+                    <div class="card-header">
+                        <div class="university-logo">🎓</div>
+                        <button class="bookmark-btn">
+                            <span class="bookmark-icon">☆</span>
+                        </button>
+                    </div>
+                    <h3>Harvard University</h3>
+                    <p class="card-location">📍 Cambridge, Massachusetts, USA</p>
+                    <p class="card-description">World-renowned Ivy League institution offering exceptional programs across all disciplines with generous financial aid.</p>
+                    <div class="card-stats">
+                        <span class="stat">Acceptance Rate: 3.4%</span>
+                        <span class="stat">Tuition: $54,269</span>
+                    </div>
+                </div>
+                
+                <div class="card university-card" data-country="uk" data-type="university">
+                    <div class="card-header">
+                        <div class="university-logo">🏛️</div>
+                        <button class="bookmark-btn">
+                            <span class="bookmark-icon">☆</span>
+                        </button>
+                    </div>
+                    <h3>University of Oxford</h3>
+                    <p class="card-location">📍 Oxford, England, UK</p>
+                    <p class="card-description">Historic university with over 900 years of academic excellence, offering world-class undergraduate and graduate programs.</p>
+                    <div class="card-stats">
+                        <span class="stat">Acceptance Rate: 17.5%</span>
+                        <span class="stat">Tuition: £9,250-£37,510</span>
+                    </div>
+                </div>
+                
+                <div class="card university-card" data-country="canada" data-type="university">
+                    <div class="card-header">
+                        <div class="university-logo">🍁</div>
+                        <button class="bookmark-btn">
+                            <span class="bookmark-icon">☆</span>
+                        </button>
+                    </div>
+                    <h3>University of Toronto</h3>
+                    <p class="card-location">📍 Toronto, Ontario, Canada</p>
+                    <p class="card-description">Leading Canadian research university with diverse programs and strong international student support services.</p>
+                    <div class="card-stats">
+                        <span class="stat">Acceptance Rate: 43%</span>
+                        <span class="stat">Tuition: CAD $58,160</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-xl">
+                <a href="search.html" class="btn btn-secondary">View All Universities</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="text-center mb-xl">Success Stories</h2>
+            <div class="testimonials-carousel">
+                <div class="testimonial-slide active">
+                    <div class="card">
+                        <div class="testimonial-content">
+                            <p>"Leaply's matching algorithm helped me find the perfect computer science program at MIT. The step-by-step guidance made the complex application process so much easier to navigate."</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">👨‍💻</div>
+                                <div class="author-info">
+                                    <h4>Alex Chen</h4>
+                                    <p>MIT Class of 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide">
+                    <div class="card">
+                        <div class="testimonial-content">
+                            <p>"Thanks to Leaply, I discovered scholarship opportunities I never knew existed. I'm now studying medicine at the University of Edinburgh with full funding!"</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">👩‍⚕️</div>
+                                <div class="author-info">
+                                    <h4>Sarah Johnson</h4>
+                                    <p>University of Edinburgh</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide">
+                    <div class="card">
+                        <div class="testimonial-content">
+                            <p>"The personalized guidance and deadline tracking kept me organized throughout my applications. I got accepted to my dream MBA program at INSEAD!"</p>
+                            <div class="testimonial-author">
+                                <div class="author-avatar">👨‍💼</div>
+                                <div class="author-info">
+                                    <h4>David Kumar</h4>
+                                    <p>INSEAD MBA Program</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carousel Controls -->
+            <div class="carousel-controls">
+                <button class="carousel-prev">‹</button>
+                <div class="carousel-indicators">
+                    <button class="carousel-indicator active"></button>
+                    <button class="carousel-indicator"></button>
+                    <button class="carousel-indicator"></button>
+                </div>
+                <button class="carousel-next">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section section-gray">
+        <div class="container">
+            <div class="text-center">
+                <h2>Ready to Start Your Journey?</h2>
+                <p class="text-secondary mb-xl">Join thousands of students who have found their perfect international education match with Leaply.</p>
+                <div class="cta-buttons">
+                    <a href="search.html" class="btn btn-primary btn-large">Find Universities</a>
+                    <a href="search.html?type=scholarships" class="btn btn-secondary btn-large">Browse Scholarships</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Leaply</h4>
+                    <p>Your trusted partner for international education. Connecting ambitious students with world-class opportunities since 2024.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="search.html">University Search</a></li>
+                        <li><a href="search.html?type=scholarships">Scholarship Search</a></li>
+                        <li><a href="profile.html">Application Tracking</a></li>
+                        <li><a href="#about">Counseling Services</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>📧 support@leaply.com</p>
+                    <p>📞 +1 (555) 123-4567</p>
+                    <p>📍 123 Education St, Learning City, LC 12345</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Leaply. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
