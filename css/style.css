@@ -116,9 +116,31 @@ p {
   gap: var(--space-sm);
 }
 
+.logo-image {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-text {
+  display: flex;
+  align-items: center;
+}
+
 .logo .logo-l {
   font-style: italic;
   transform: rotate(-5deg);
+}
+
+/* Responsive logo adjustments */
+@media (max-width: 768px) {
+  .logo {
+    font-size: var(--font-size-xl);
+  }
+  
+  .logo-image {
+    height: 32px;
+  }
 }
 
 /* Layout Components */
