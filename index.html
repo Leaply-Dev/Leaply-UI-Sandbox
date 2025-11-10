@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Leaply - Your Gateway to International Education</title>
     <meta name="description" content="Find your perfect university or scholarship abroad with Leaply's intelligent matching platform. Get personalized guidance for your international education journey.">
     
@@ -236,6 +239,19 @@
         });
         
         /**
+         * Get logo URL for a university
+         */
+        function getLogoUrl(university) {
+            // First priority: Check for local logo file in /icons directory
+            if (university.id) {
+                return `/icons/${university.id}.jpg`;
+            }
+            
+            // Final fallback
+            return null;
+        }
+
+        /**
          * Create HTML for a university card
          */
         function createUniversityCard(uni) {
@@ -258,14 +274,13 @@
                 ? `${symbol}${uni.tuition_range.max.toLocaleString()}`
                 : `${symbol}${uni.tuition_range.min.toLocaleString()}-${uni.tuition_range.max.toLocaleString()}`;
             
+            // Get logo URL and create logo HTML
+            const logoUrl = getLogoUrl(uni);    
+            const logoHTML = logoUrl ? `<img src="${logoUrl}" alt="${uni.name}" class="university-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">` : '';
+            
             return `
-                <div class="card university-card" data-university-id="${uni.id}" data-country="${uni.country}">
-                    <div class="card-header">
-                        <div class="university-logo">${uni.logo}</div>
-                        <button class="bookmark-btn" data-university-id="${uni.id}" aria-label="Bookmark ${uni.name}">
-                            <span class="bookmark-icon">☆</span>
-                        </button>
-                    </div>
+                <div class="card university-card" data-university-id="${uni.id}" data-country="${uni.country}" style="position: relative;">
+                    <div class="university-logo">${logoHTML}</div>
                     <h3>${uni.name}</h3>
                     <p class="card-location">📍 ${uni.city_or_state}, ${uni.country}</p>
                     <p class="card-description">${uni.description}</p>

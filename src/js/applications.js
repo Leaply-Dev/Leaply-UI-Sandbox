@@ -3,21 +3,29 @@
 class ApplicationManager {
     constructor() {
         this.universities = [];
-        this.applications = this.loadApplications();
+        this.applications = [];
         this.selectedUniversityId = null;
+        this.isModifyMode = false;
         this.init();
     }
 
     async init() {
         await this.loadUniversities();
+        this.loadApplications();
         this.renderUniversityList();
         this.updateStats();
+        this.updateUniversityCount();
         this.setupEventListeners();
         
-        // Don't call selectUniversity - let HTML content stay as-is
-        // Just set up interactive elements for the default visible NUS
-        this.selectedUniversityId = 'nus';
-        this.setupInteractiveElementsOnly();
+        // Select first university if available
+        if (this.applications.length > 0) {
+            this.selectedUniversityId = this.applications[0].universityId;
+            this.selectUniversity(this.selectedUniversityId);
+        } else {
+            // Show empty state
+            document.getElementById('emptyState').style.display = 'block';
+            document.getElementById('universityOverview').style.display = 'none';
+        }
     }
 
     async loadUniversities() {
@@ -30,104 +38,43 @@ class ApplicationManager {
     }
 
     loadApplications() {
-        // Mock demo data for demonstration
-        return [
-            {
-                universityId: 'nus',
-                status: 'in-progress',
-                progress: 56,
-                fitScore: 85,
-                requirements: {
-                    gpa: true,
-                    transcripts: true,
-                    language: true,
-                    sat: false,
-                    essays: true,
-                    recommendations: true,
-                    cv: false,
-                    financial: false,
-                    fee: false
-                },
-                notes: 'Strong match for Computer Science program',
-                addedDate: '2024-10-15T10:00:00Z'
-            },
-            {
-                universityId: 'mit',
-                status: 'researching',
-                progress: 22,
-                fitScore: 72,
-                requirements: {
-                    gpa: true,
-                    transcripts: false,
-                    language: true,
-                    sat: false,
-                    essays: false,
-                    recommendations: false,
-                    cv: false,
-                    financial: false,
-                    fee: false
-                },
-                notes: 'Dream school - highly competitive',
-                addedDate: '2024-10-20T14:30:00Z'
-            },
-            {
-                universityId: 'stanford',
-                status: 'preparing',
-                progress: 33,
-                fitScore: 78,
-                requirements: {
-                    gpa: true,
-                    transcripts: true,
-                    language: true,
-                    sat: false,
-                    essays: false,
-                    recommendations: false,
-                    cv: false,
-                    financial: false,
-                    fee: false
-                },
-                notes: 'Great for entrepreneurship focus',
-                addedDate: '2024-10-18T09:15:00Z'
-            },
-            {
-                universityId: 'toronto',
-                status: 'submitted',
-                progress: 100,
-                fitScore: 88,
-                requirements: {
-                    gpa: true,
-                    transcripts: true,
-                    language: true,
-                    sat: true,
-                    essays: true,
-                    recommendations: true,
-                    cv: true,
-                    financial: true,
-                    fee: true
-                },
-                notes: 'Application completed and submitted',
-                addedDate: '2024-09-05T11:00:00Z'
-            },
-            {
-                universityId: 'melbourne',
-                status: 'not-started',
-                progress: 0,
-                fitScore: 81,
-                requirements: {
-                    gpa: false,
-                    transcripts: false,
-                    language: false,
-                    sat: false,
-                    essays: false,
-                    recommendations: false,
-                    cv: false,
-                    financial: false,
-                    fee: false
-                },
-                notes: 'Good backup option',
-                addedDate: '2024-11-01T16:45:00Z'
-            }
-        ];
+        // Load applications from universities with onTrack=true
+        this.applications = this.universities
+            .filter(uni => uni.onTrack === true)
+            .map(uni => {
+                const tracking = uni.application_tracking || {};
+                const requirements = tracking.requirements || {};
+                
+                // Calculate requirements object from application_tracking data
+                const reqObj = {
+                    gpa: this.isRequirementCompleted(requirements.academic, 'GPA Requirements'),
+                    transcripts: this.isRequirementCompleted(requirements.academic, 'Official Transcripts'),
+                    language: this.isRequirementCompleted(requirements.test_scores, 'Language Test'),
+                    sat: this.isRequirementCompleted(requirements.test_scores, 'SAT/ACT Scores'),
+                    essays: this.isRequirementCompleted(requirements.personal, 'Personal Statement'),
+                    recommendations: this.isRequirementCompleted(requirements.personal, 'Recommendation Letters'),
+                    cv: this.isRequirementCompleted(requirements.personal, 'CV/Resume'),
+                    financial: this.isRequirementCompleted(requirements.financial, 'Financial Documents'),
+                    fee: this.isRequirementCompleted(requirements.financial, 'Application Fee')
+                };
+                
+                return {
+                    universityId: uni.id,
+                    status: tracking.status || 'not-started',
+                    progress: tracking.progress || 0,
+                    fitScore: tracking.fitScore || 0,
+                    requirements: reqObj,
+                    application_tracking: tracking, // Keep full tracking data for detailed view
+                    notes: '',
+                    addedDate: new Date().toISOString()
+                };
+            });
+    }
+
+    isRequirementCompleted(category, requirementName) {
+        if (!category || !Array.isArray(category)) return false;
+        const req = category.find(r => r.name === requirementName);
+        return req && req.status === 'completed';
     }
 
     saveApplications() {
@@ -143,22 +90,9 @@ class ApplicationManager {
     }
 
     renderUniversityList() {
-        // Don't re-render if we already have demo HTML content
         const listElement = document.getElementById('universityList');
-        const hasExistingContent = listElement.querySelector('.university-list-item');
         
-        if (hasExistingContent) {
-            // Just set up click handlers for existing items
-            document.querySelectorAll('.university-list-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    const universityId = item.dataset.universityId;
-                    this.selectUniversity(universityId);
-                });
-            });
-            return;
-        }
-        
-        // Only render dynamically if no content exists
+        // Show empty state if no applications
         if (this.applications.length === 0) {
             listElement.innerHTML = `
                 <div class="empty-state">
@@ -174,30 +108,81 @@ class ApplicationManager {
         
         this.applications.forEach(app => {
             const university = this.getUniversityById(app.universityId);
-            if (!university) return;
+            if (!university) {
+                console.warn(`University with ID ${app.universityId} not found`);
+                return;
+            }
 
             const item = document.createElement('div');
             item.className = `university-list-item ${this.selectedUniversityId === app.universityId ? 'active' : ''}`;
             item.dataset.universityId = app.universityId;
             
+            // Get logo URL - always render as image if URL exists
+            const logoUrl = this.getLogoUrl(university);
+            const fallbackEmoji = (!logoUrl && university.logo && !university.logo.startsWith('http') && !university.logo.startsWith('/')) ? university.logo : '🎓';
+            
+            // Always render as image tag if we have a URL
+            let logoHTML = '';
+            if (logoUrl) {
+                logoHTML = `<img src="${logoUrl}" alt="${university.name}" class="university-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="university-logo-fallback" style="display: none;">${fallbackEmoji}</div>`;
+            } else {
+                // Fallback to emoji div if no logo URL available
+                logoHTML = `<div class="university-logo-fallback">${fallbackEmoji}</div>`;
+            }
+            
+            // Get field of study
+            const fieldOfStudy = this.getFieldOfStudy(university);
+            
+            // Get step information
+            const stepInfo = this.getStepInfo(app.status);
+            
+            // Determine color based on fit score (matching search.js)
+            let fitColor = '#9ca3af'; // grey for <50
+            if (app.fitScore >= 85) {
+                fitColor = '#22c55e'; // green for >=85
+            } else if (app.fitScore >= 50) {
+                fitColor = '#3b82f6'; // blue for 50-84
+            }
+            
+            // Calculate circumference for SVG circle (radius = 20, so circumference = 2 * π * 20 ≈ 125.66)
+            const radius = 20;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference - (app.fitScore / 100) * circumference;
+            
             item.innerHTML = `
-                <div class="university-list-item-header">
-                    <div class="university-list-logo">${university.logo}</div>
-                    <div class="university-list-info">
-                        <p class="university-list-name">${university.name}</p>
-                        <p class="university-list-location">${university.city}, ${university.country}</p>
+                <button class="btn-delete-university" data-university-id="${app.universityId}" style="display: none;">🗑️</button>
+                <div class="university-list-item-content">
+                    <div class="university-list-item-header">
+                        <div class="university-list-logo">${logoHTML}</div>
+                        <div class="fit-score-wrapper">
+                            <div class="fit-ring-container">
+                                <svg class="fit-ring" width="44" height="44">
+                                    <circle class="fit-ring-bg" cx="22" cy="22" r="${radius}" fill="none" stroke="#e5e7eb" stroke-width="3"/>
+                                    <circle class="fit-ring-progress" cx="22" cy="22" r="${radius}" fill="none" stroke="${fitColor}" stroke-width="3" 
+                                            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" 
+                                            stroke-linecap="round" transform="rotate(-90 22 22)"/>
+                                </svg>
+                                <span class="fit-ring-text" style="color: ${fitColor}">${app.fitScore}</span>
+                            </div>
+                            <span class="fit-score-label">Fit score</span>
+                        </div>
                     </div>
-                </div>
-                <div class="university-list-footer">
-                    <span class="application-status-badge status-${app.status}">${app.status.replace('-', ' ')}</span>
-                    <span class="fit-score-mini">${app.fitScore}% fit</span>
-                </div>
-                <div class="progress-mini" style="margin-top: 0.5rem;">
-                    <div class="progress-mini-fill" style="width: ${app.progress}%"></div>
+                    <p class="university-field-of-study">${fieldOfStudy}</p>
+                    <p class="university-list-name">${university.name}</p>
+                    <div class="university-step-info">
+                        <span class="step-label">Step ${stepInfo.step}/8:</span>
+                        <span class="step-name">${stepInfo.name}</span>
+                    </div>
                 </div>
             `;
             
-            item.addEventListener('click', () => this.selectUniversity(app.universityId));
+            item.addEventListener('click', (e) => {
+                // Don't select if clicking on delete button or in modify mode
+                if (!e.target.classList.contains('btn-delete-university') && !this.isModifyMode) {
+                    this.selectUniversity(app.universityId);
+                }
+            });
             listElement.appendChild(item);
         });
     }
@@ -218,20 +203,334 @@ class ApplicationManager {
     }
 
     renderUniversityDetail() {
-        // DO NOT render content - HTML already has demo content
-        // This method now only handles updating active states
         const application = this.getApplicationByUniversityId(this.selectedUniversityId);
+        const university = this.getUniversityById(this.selectedUniversityId);
         
-        if (!application) {
+        if (!application || !university) {
             return;
         }
 
-        // Just ensure overview is visible and empty state is hidden
+        // Show overview and hide empty state
         document.getElementById('emptyState').style.display = 'none';
         document.getElementById('universityOverview').style.display = 'block';
         
-        // Set up interactive elements only (checkboxes, dropdowns)
+        // Render Information Section
+        this.renderInformationSection(university, application);
+        
+        // Render Admission Probability
+        this.renderAdmissionProbability(university, application);
+        
+        // Render Quick Info Cards
+        this.renderQuickInfoCards(university);
+        
+        // Render Application Progress & Requirements
+        this.renderApplicationProgress(application);
+        
+        // Set up interactive elements
         this.setupInteractiveElementsOnly();
+    }
+
+    renderInformationSection(university, application) {
+        // Field
+        const field = this.getFieldOfStudy(university);
+        const fieldElement = document.getElementById('uniField');
+        if (fieldElement) {
+            fieldElement.textContent = field;
+        }
+
+        // University Logo
+        const logoElement = document.getElementById('uniLogoLarge');
+        if (logoElement) {
+            const logoUrl = this.getLogoUrl(university);
+            if (logoUrl) {
+                logoElement.innerHTML = `<img src="${logoUrl}" alt="${university.name}" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">`;
+            } else {
+                logoElement.innerHTML = `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2rem; background: #f3f4f6; border-radius: 8px;">🎓</div>`;
+            }
+        }
+
+        // University Name
+        const nameElement = document.getElementById('uniName');
+        if (nameElement) nameElement.textContent = university.name;
+
+        // Location
+        const locationElement = document.getElementById('uniLocation');
+        if (locationElement) {
+            locationElement.textContent = `📍 ${university.city_or_state}, ${university.country}`;
+        }
+
+        // Ranking
+        const rankingElement = document.getElementById('uniRanking');
+        if (rankingElement) {
+            rankingElement.textContent = `#${university.global_ranking} Global`;
+        }
+
+        // Fit Score
+        const fitScoreElement = document.getElementById('uniFitScore');
+        if (fitScoreElement) {
+            fitScoreElement.textContent = `${application.fitScore}% Fit`;
+        }
+
+        // Days to Deadline
+        const daysLeft = this.calculateDaysToDeadline(application);
+        const daysLeftElement = document.getElementById('daysLeft');
+        if (daysLeftElement) {
+            if (daysLeft === null) {
+                daysLeftElement.textContent = 'N/A';
+            } else if (daysLeft < 0) {
+                daysLeftElement.textContent = `Overdue ${Math.abs(daysLeft)} days`;
+            } else {
+                daysLeftElement.textContent = `${daysLeft} days`;
+            }
+        }
+
+        // Progress
+        const progressElement = document.getElementById('progressValue');
+        if (progressElement) {
+            progressElement.textContent = `${application.progress}%`;
+        }
+
+        // Requirements Met
+        const requirements = application.application_tracking?.requirements || {};
+        const totalReqs = this.countTotalRequirements(requirements);
+        const completedReqs = this.countCompletedRequirements(requirements);
+        const requirementsMetElement = document.getElementById('requirementsMet');
+        if (requirementsMetElement) {
+            requirementsMetElement.textContent = `${completedReqs} of ${totalReqs}`;
+        }
+
+        // Application Fee (mock data for now)
+        const feeElement = document.getElementById('applicationFee');
+        if (feeElement) {
+            feeElement.textContent = '$50';
+        }
+    }
+
+    renderQuickInfoCards(university) {
+        // Tuition
+        const tuitionElement = document.getElementById('infoTuition');
+        if (tuitionElement && university.tuition_range) {
+            const min = university.tuition_range.min?.toLocaleString() || 'N/A';
+            const max = university.tuition_range.max?.toLocaleString() || 'N/A';
+            const currency = university.tuition_range.currency || 'USD';
+            if (min === max) {
+                tuitionElement.textContent = `${currency} ${min}`;
+            } else {
+                tuitionElement.textContent = `${currency} ${min}-${max}`;
+            }
+        }
+
+        // Acceptance Rate
+        const acceptanceElement = document.getElementById('infoAcceptance');
+        if (acceptanceElement && university.acceptance_rate) {
+            acceptanceElement.textContent = `${university.acceptance_rate}%`;
+        }
+
+        // International Students
+        const internationalElement = document.getElementById('infoInternational');
+        if (internationalElement && university.international_student_ratio) {
+            internationalElement.textContent = `${university.international_student_ratio}%`;
+        }
+
+        // Total Students
+        const studentsElement = document.getElementById('infoStudents');
+        if (studentsElement && university.total_students) {
+            studentsElement.textContent = `${university.total_students.toLocaleString()}+`;
+        }
+    }
+
+    renderAdmissionProbability(university, application) {
+        const fitScore = application.fitScore || 0;
+        
+        // Update score display
+        const scoreElement = document.getElementById('admissionScore');
+        if (scoreElement) {
+            scoreElement.textContent = fitScore;
+        }
+
+        // Update circular progress
+        const circumference = 2 * Math.PI * 40;
+        const offset = circumference - (fitScore / 100) * circumference;
+        const scoreFill = document.getElementById('scoreFill');
+        if (scoreFill) {
+            scoreFill.style.strokeDashoffset = offset;
+        }
+
+        // Generate and render factors
+        const factors = this.generatePersonalizedFactors(university, fitScore);
+        const factorList = document.getElementById('factorList');
+        if (factorList) {
+            factorList.innerHTML = factors.map(factor => `
+                <div class="factor-item">
+                    <span class="factor-name">
+                        <span class="factor-indicator ${factor.indicator}"></span>
+                        ${factor.name}
+                    </span>
+                    <span class="factor-value">${factor.value}</span>
+                </div>
+            `).join('');
+        }
+
+        // Show Action button if any factor has "Consider" status
+        const hasConsider = factors.some(f => f.value === 'Consider' || f.value === 'Action');
+        const actionBtn = document.getElementById('admissionActionBtn');
+        if (actionBtn) {
+            actionBtn.style.display = hasConsider ? 'block' : 'none';
+        }
+    }
+
+    renderApplicationProgress(application) {
+        const stepInfo = this.getStepInfo(application.status);
+        
+        // Update step number and name
+        const stepNumberElement = document.getElementById('currentStepNumber');
+        if (stepNumberElement) stepNumberElement.textContent = stepInfo.step;
+        
+        const stepNameElement = document.getElementById('currentStepName');
+        if (stepNameElement) stepNameElement.textContent = stepInfo.name;
+
+        // Update progress percentage
+        const progressPercentage = document.getElementById('progressPercentage');
+        if (progressPercentage) progressPercentage.textContent = `${application.progress}%`;
+
+        // Update progress bar
+        const progressFill = document.getElementById('progressFill');
+        if (progressFill) progressFill.style.width = `${application.progress}%`;
+
+        // Render Todo and Completed lists
+        const requirements = application.application_tracking?.requirements || {};
+        this.renderRequirementsLists(requirements);
+    }
+
+    renderRequirementsLists(requirements) {
+        const todoList = document.getElementById('todoList');
+        const completedList = document.getElementById('completedList');
+        const todoCountBadge = document.getElementById('todoCountBadge');
+        const completedCountBadge = document.getElementById('completedCountBadge');
+        
+        if (!todoList || !completedList) return;
+
+        // Collect all requirements
+        const allReqs = [];
+        Object.keys(requirements).forEach(category => {
+            if (Array.isArray(requirements[category])) {
+                requirements[category].forEach(req => {
+                    allReqs.push({
+                        ...req,
+                        category: category
+                    });
+                });
+            }
+        });
+
+        // Separate into todo and completed
+        const todoItems = allReqs.filter(req => req.status === 'pending');
+        const completedItems = allReqs.filter(req => req.status === 'completed');
+
+        // Update count badges
+        if (todoCountBadge) {
+            todoCountBadge.textContent = todoItems.length;
+        }
+        if (completedCountBadge) {
+            completedCountBadge.textContent = completedItems.length;
+        }
+
+        // Render Todo list
+        if (todoItems.length === 0) {
+            todoList.innerHTML = '<div class="empty-list-message">No pending requirements</div>';
+        } else {
+            todoList.innerHTML = todoItems.map(req => {
+                const actionClass = this.getActionButtonClass(req.action);
+                return `
+                    <div class="requirement-action-item pending">
+                        <div class="req-action-left">
+                            <div class="req-status-icon">⏳</div>
+                            <div class="req-info">
+                                <div class="req-name">${req.name}</div>
+                                <div class="req-detail">${req.detail || 'Pending'}</div>
+                            </div>
+                        </div>
+                        <button class="btn-action ${actionClass}">${req.action || 'Action'}</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render Completed list
+        if (completedItems.length === 0) {
+            completedList.innerHTML = '<div class="empty-list-message">No completed requirements yet</div>';
+        } else {
+            completedList.innerHTML = completedItems.map(req => {
+                const actionClass = this.getActionButtonClass(req.action);
+                return `
+                    <div class="requirement-action-item completed">
+                        <div class="req-action-left">
+                            <div class="req-status-icon">✓</div>
+                            <div class="req-info">
+                                <div class="req-name">${req.name}</div>
+                                <div class="req-detail">${req.detail || 'Completed'}</div>
+                            </div>
+                        </div>
+                        <button class="btn-action ${actionClass}">${req.action || 'View'}</button>
+                    </div>
+                `;
+            }).join('');
+        }
+    }
+
+    getActionButtonClass(action) {
+        if (!action) return 'btn-action-view';
+        const actionLower = action.toLowerCase();
+        if (actionLower.includes('edit')) return 'btn-action-edit';
+        if (actionLower.includes('upload')) return 'btn-action-upload';
+        if (actionLower.includes('pay')) return 'btn-action-pay';
+        return 'btn-action-view';
+    }
+
+    countTotalRequirements(requirements) {
+        let total = 0;
+        Object.keys(requirements).forEach(category => {
+            if (Array.isArray(requirements[category])) {
+                total += requirements[category].length;
+            }
+        });
+        return total;
+    }
+
+    countCompletedRequirements(requirements) {
+        let completed = 0;
+        Object.keys(requirements).forEach(category => {
+            if (Array.isArray(requirements[category])) {
+                completed += requirements[category].filter(req => req.status === 'completed').length;
+            }
+        });
+        return completed;
+    }
+
+    calculateDaysToDeadline(application) {
+        // Check if deadline exists in application_tracking
+        const deadline = application.application_tracking?.deadline;
+        if (!deadline) {
+            // Default to 60 days from now if no deadline set
+            const defaultDeadline = new Date();
+            defaultDeadline.setDate(defaultDeadline.getDate() + 60);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            defaultDeadline.setHours(0, 0, 0, 0);
+            const diffTime = defaultDeadline - today;
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        try {
+            const deadlineDate = new Date(deadline);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            deadlineDate.setHours(0, 0, 0, 0);
+            const diffTime = deadlineDate - today;
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        } catch {
+            return null;
+        }
     }
 
     setupInteractiveElementsOnly() {
@@ -407,81 +706,255 @@ class ApplicationManager {
         });
 
         // Return only first 4-5 factors
-        return factors.slice(0, 4).map(factor => `
-            <div class="factor-item">
-                <span class="factor-name">
-                    <span class="factor-indicator ${factor.indicator}"></span>
-                    ${factor.name}
-                </span>
-                <span class="factor-value">${factor.value}</span>
-            </div>
-        `).join('');
+        return factors.slice(0, 4);
+    }
+
+    formatStatus(status) {
+        // Convert status value to readable format
+        const statusMap = {
+            'planning-phase': 'Planning Phase',
+            'exploring-programs': 'Exploring Programs',
+            'gathering-documents': 'Gathering Documents',
+            'submitting-application': 'Submitting Application',
+            'application-submitted': 'Application Submitted',
+            'interview-scheduled': 'Interview Scheduled',
+            'offer-received': 'Offer Received',
+            'not-accepted': 'Not Accepted'
+        };
+        return statusMap[status] || status.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
+
+    getStepInfo(status) {
+        // Map status to step number and name (8 total steps)
+        const stepMap = {
+            'planning-phase': { step: 1, name: 'Planning Phase' },
+            'exploring-programs': { step: 2, name: 'Exploring Programs' },
+            'gathering-documents': { step: 3, name: 'Gathering Documents' },
+            'submitting-application': { step: 4, name: 'Submitting Application' },
+            'application-submitted': { step: 5, name: 'Application Submitted' },
+            'interview-scheduled': { step: 6, name: 'Interview Scheduled' },
+            'offer-received': { step: 7, name: 'Offer Received' },
+            'not-accepted': { step: 8, name: 'Not Accepted' }
+        };
+        return stepMap[status] || { step: 1, name: 'Planning Phase' };
+    }
+
+    getFieldOfStudy(university) {
+        // Get field of study - use first notable field or main field
+        if (university.notable_fields && university.notable_fields.length > 0) {
+            return university.notable_fields[0];
+        }
+        if (university.main_fields && university.main_fields.length > 0) {
+            return university.main_fields[0];
+        }
+        return 'General Studies';
+    }
+
+    getLogoUrl(university) {
+        // First priority: Check for local logo file in /icons directory
+        if (university.id) {
+            return `/icons/${university.id}.jpg`;
+        }
+        
+        // Final fallback
+        return null;
     }
 
     updateStats() {
         const total = this.applications.length;
         const inProgress = this.applications.filter(app => 
-            ['researching', 'preparing', 'in-progress', 'interview'].includes(app.status)
+            ['exploring-programs', 'gathering-documents', 'submitting-application', 'interview-scheduled'].includes(app.status)
         ).length;
-        const completed = this.applications.filter(app => app.status === 'submitted').length;
+        const completed = this.applications.filter(app => app.status === 'application-submitted').length;
 
-        document.getElementById('totalApps').textContent = total;
-        document.getElementById('inProgressApps').textContent = inProgress;
-        document.getElementById('completedApps').textContent = completed;
+        // Update mobile stats
+        const totalAppsEl = document.getElementById('totalApps');
+        const inProgressAppsEl = document.getElementById('inProgressApps');
+        const completedAppsEl = document.getElementById('completedApps');
+        
+        if (totalAppsEl) totalAppsEl.textContent = total;
+        if (inProgressAppsEl) inProgressAppsEl.textContent = inProgress;
+        if (completedAppsEl) completedAppsEl.textContent = completed;
+        
+        // Update desktop stats
+        const totalAppsDesktopEl = document.getElementById('totalAppsDesktop');
+        const inProgressAppsDesktopEl = document.getElementById('inProgressAppsDesktop');
+        const completedAppsDesktopEl = document.getElementById('completedAppsDesktop');
+        
+        if (totalAppsDesktopEl) totalAppsDesktopEl.textContent = total;
+        if (inProgressAppsDesktopEl) inProgressAppsDesktopEl.textContent = inProgress;
+        if (completedAppsDesktopEl) completedAppsDesktopEl.textContent = completed;
     }
 
     setupEventListeners() {
-        // Add university button
-        document.getElementById('addUniversityBtn').addEventListener('click', () => {
-            window.location.href = 'search.html';
-        });
+        // Sidebar toggle for mobile
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const dashboardSidebar = document.getElementById('dashboardSidebar');
+        
+        if (sidebarToggle && dashboardSidebar) {
+            // Initialize sidebar as collapsed on mobile
+            if (window.innerWidth < 768) {
+                dashboardSidebar.classList.add('collapsed');
+            }
+            
+            sidebarToggle.addEventListener('click', () => {
+                dashboardSidebar.classList.toggle('collapsed');
+                dashboardSidebar.classList.toggle('expanded');
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth >= 768) {
+                    dashboardSidebar.classList.remove('collapsed', 'expanded');
+                } else if (!dashboardSidebar.classList.contains('expanded') && !dashboardSidebar.classList.contains('collapsed')) {
+                    dashboardSidebar.classList.add('collapsed');
+                }
+            });
+        }
+        
+        // Modify button - toggle modify mode
+        const modifyBtn = document.getElementById('modifyBtn');
+        if (modifyBtn) {
+            modifyBtn.addEventListener('click', () => {
+                this.toggleModifyMode();
+            });
+        }
 
-        // Remove university button
-        document.getElementById('removeUniversityBtn').addEventListener('click', () => {
-            if (confirm('Are you sure you want to remove this university from your applications?')) {
-                this.removeApplication(this.selectedUniversityId);
+        // Add university card
+        const addUniversityCard = document.getElementById('addUniversityCard');
+        if (addUniversityCard) {
+            addUniversityCard.addEventListener('click', () => {
+                window.location.href = 'search.html';
+            });
+        }
+
+        // Remove university button (in detail view)
+        const removeUniversityBtn = document.getElementById('removeUniversityBtn');
+        if (removeUniversityBtn) {
+            removeUniversityBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to remove this university from your applications?')) {
+                    this.removeApplication(this.selectedUniversityId);
+                }
+            });
+        }
+
+        // Admission action button
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#admissionActionBtn')) {
+                alert('This would open an action page to address the factors that need consideration.');
             }
         });
+
+        // Tab switching
+        this.setupTabs();
+
+        // Setup delete button handlers
+        this.setupDeleteButtons();
 
         // Action buttons for requirements
         this.setupActionButtons();
     }
 
+    toggleModifyMode() {
+        this.isModifyMode = !this.isModifyMode;
+        
+        // Update button text
+        const modifyBtn = document.getElementById('modifyBtn');
+        if (modifyBtn) {
+            if (this.isModifyMode) {
+                modifyBtn.innerHTML = '<span>✅</span>';
+                modifyBtn.classList.add('btn-secondary');
+                modifyBtn.classList.remove('btn-primary');
+            } else {
+                modifyBtn.innerHTML = '<span>✏️</span>';
+                modifyBtn.classList.add('btn-primary');
+                modifyBtn.classList.remove('btn-secondary');
+            }
+        }
+
+        // Show/hide Add University card
+        const addUniversityCard = document.getElementById('addUniversityCard');
+        if (addUniversityCard) {
+            addUniversityCard.style.display = this.isModifyMode ? 'block' : 'none';
+        }
+
+        // Show/hide delete buttons
+        document.querySelectorAll('.btn-delete-university').forEach(btn => {
+            btn.style.display = this.isModifyMode ? 'block' : 'none';
+        });
+
+        // Disable/enable click on university items when in modify mode
+        document.querySelectorAll('.university-list-item').forEach(item => {
+            if (this.isModifyMode) {
+                item.style.cursor = 'default';
+            } else {
+                item.style.cursor = 'pointer';
+            }
+        });
+    }
+
+    setupDeleteButtons() {
+        // Use event delegation for dynamically added buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('btn-delete-university')) {
+                e.stopPropagation(); // Prevent triggering university selection
+                const universityId = e.target.dataset.universityId;
+                if (confirm(`Are you sure you want to remove this university from your applications?`)) {
+                    this.removeApplication(universityId);
+                    // Exit modify mode after deletion
+                    if (this.isModifyMode) {
+                        this.toggleModifyMode();
+                    }
+                }
+            }
+        });
+    }
+
+    setupTabs() {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.dataset.tab;
+
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                // Show corresponding content
+                const targetContent = document.getElementById(`tabContent${targetTab.charAt(0).toUpperCase() + targetTab.slice(1)}`);
+                if (targetContent) {
+                    targetContent.classList.add('active');
+                }
+            });
+        });
+    }
+
     setupActionButtons() {
-        // View buttons
-        document.querySelectorAll('.btn-action-view').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const reqName = btn.closest('.requirement-action-item').querySelector('.req-name').textContent;
+        // Use event delegation for dynamically added buttons
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-action');
+            if (!btn) return;
+
+            e.preventDefault();
+            const reqItem = btn.closest('.requirement-action-item');
+            if (!reqItem) return;
+
+            const reqName = reqItem.querySelector('.req-name')?.textContent || 'Requirement';
+            
+            if (btn.classList.contains('btn-action-view')) {
                 alert(`📄 Viewing: ${reqName}\n\nThis would open a document viewer or detail page.`);
-            });
-        });
-
-        // Edit buttons
-        document.querySelectorAll('.btn-action-edit').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const reqName = btn.closest('.requirement-action-item').querySelector('.req-name').textContent;
+            } else if (btn.classList.contains('btn-action-edit')) {
                 alert(`✏️ Editing: ${reqName}\n\nThis would open the essay editor or document editor.`);
-            });
-        });
-
-        // Upload buttons
-        document.querySelectorAll('.btn-action-upload').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const reqName = btn.closest('.requirement-action-item').querySelector('.req-name').textContent;
+            } else if (btn.classList.contains('btn-action-upload')) {
                 alert(`📤 Upload: ${reqName}\n\nThis would open a file upload dialog.`);
-            });
-        });
-
-        // Pay Now button
-        document.querySelectorAll('.btn-action-pay').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const reqName = btn.closest('.requirement-action-item').querySelector('.req-name').textContent;
+            } else if (btn.classList.contains('btn-action-pay')) {
                 alert(`💳 Payment: ${reqName}\n\nThis would redirect to the payment gateway.`);
-            });
+            }
         });
     }
 
@@ -494,13 +967,40 @@ class ApplicationManager {
         const updatedBookmarks = bookmarks.filter(id => id !== universityId);
         localStorage.setItem('leaply_bookmarks', JSON.stringify(updatedBookmarks));
         
-        this.selectedUniversityId = null;
-        this.renderUniversityList();
-        this.updateStats();
+        // Remove the university item from DOM (find the university-list-item, not the button)
+        const itemToRemove = document.querySelector(`.university-list-item[data-university-id="${universityId}"]`);
+        if (itemToRemove) {
+            itemToRemove.remove();
+        }
         
-        // Show empty state
-        document.getElementById('emptyState').style.display = 'block';
-        document.getElementById('universityOverview').style.display = 'none';
+        // Update count in header
+        this.updateUniversityCount();
+        
+        // Update selected university if it was the deleted one
+        if (this.selectedUniversityId === universityId) {
+            this.selectedUniversityId = null;
+            // Show empty state if no more universities
+            if (this.applications.length === 0) {
+                document.getElementById('emptyState').style.display = 'block';
+                document.getElementById('universityOverview').style.display = 'none';
+            } else {
+                // Select the first remaining university
+                const firstApp = this.applications[0];
+                if (firstApp) {
+                    this.selectUniversity(firstApp.universityId);
+                }
+            }
+        }
+        
+        this.updateStats();
+    }
+
+    updateUniversityCount() {
+        const count = this.applications.length;
+        const header = document.querySelector('.sidebar-header h2');
+        if (header) {
+            header.textContent = `Target Universities (${count})`;
+        }
     }
 }
 

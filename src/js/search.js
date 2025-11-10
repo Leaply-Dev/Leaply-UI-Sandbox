@@ -463,6 +463,16 @@ class SearchManager {
         return amount * (rates[currency] || 1);
     }
 
+    getLogoUrl(university) {
+        // First priority: Check for local logo file in /icons directory
+        if (university.id) {
+            return `/icons/${university.id}.jpg`;
+        }
+        
+        // Final fallback
+        return null;
+    }
+
     renderResults() {
         // Update counts
         document.getElementById('universityCount').textContent = this.filteredUniversities.length;
@@ -517,10 +527,15 @@ class SearchManager {
             // Combine degree levels and main fields for tags
             const fieldTags = [...degreeDisplay, ...uni.main_fields.slice(0, 3)];
             
+            // Get logo URL and create logo HTML
+            const logoUrl = this.getLogoUrl(uni);
+            
+            const logoHTML = logoUrl ? `<img src="${logoUrl}" alt="${uni.name}" class="university-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">` : '';
+            
             return `
                 <div class="university-card" data-id="${uni.id}">
                     <div class="card-top-row">
-                        <div class="university-logo">${uni.logo || '🎓'}</div>
+                        <div class="university-logo">${logoHTML}</div>
                         <div class="fit-score-wrapper">
                             <div class="fit-ring-container">
                                 <svg class="fit-ring" width="44" height="44">
