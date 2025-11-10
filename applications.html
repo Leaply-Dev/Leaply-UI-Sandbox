@@ -72,7 +72,9 @@
                     <!-- Demo University 1: NUS -->
                     <div class="university-list-item active" data-university-id="nus">
                         <div class="university-list-item-header">
-                            <div class="university-list-logo">🇸🇬</div>
+                            <div class="university-list-logo">
+                                <img src="resources/icons/nus.jpg" alt="NUS" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">
+                            </div>
                             <div class="university-list-info">
                                 <p class="university-list-name">National University of Singapore</p>
                                 <p class="university-list-location">Singapore, Singapore</p>
@@ -164,35 +166,23 @@
 
         <!-- Main Content -->
         <main class="dashboard-main">
-            <!-- Quick Stats -->
-            <div class="quick-stats-main">
-                <div class="stat-card-main">
-                    <div class="stat-icon">📚</div>
-                    <div class="stat-info">
-                        <span class="stat-number" id="totalApps">5</span>
-                        <span class="stat-label">Total Applications</span>
-                    </div>
+            <!-- Overall Quick Stats -->
+            <div class="overall-stats-banner">
+                <div class="stat-item-inline">
+                    <span class="stat-icon-inline">📚</span>
+                    <span><strong id="totalApps">5</strong> Applications</span>
                 </div>
-                <div class="stat-card-main">
-                    <div class="stat-icon">⏳</div>
-                    <div class="stat-info">
-                        <span class="stat-number" id="inProgressApps">1</span>
-                        <span class="stat-label">In Progress</span>
-                    </div>
+                <div class="stat-item-inline">
+                    <span class="stat-icon-inline">⏳</span>
+                    <span><strong id="inProgressApps">1</strong> In Progress</span>
                 </div>
-                <div class="stat-card-main">
-                    <div class="stat-icon">✅</div>
-                    <div class="stat-info">
-                        <span class="stat-number" id="completedApps">1</span>
-                        <span class="stat-label">Submitted</span>
-                    </div>
+                <div class="stat-item-inline">
+                    <span class="stat-icon-inline">✅</span>
+                    <span><strong id="completedApps">1</strong> Submitted</span>
                 </div>
-                <div class="stat-card-main">
-                    <div class="stat-icon">🎯</div>
-                    <div class="stat-info">
-                        <span class="stat-number">3</span>
-                        <span class="stat-label">Upcoming Deadlines</span>
-                    </div>
+                <div class="stat-item-inline">
+                    <span class="stat-icon-inline">🎯</span>
+                    <span><strong>3</strong> Deadlines This Month</span>
                 </div>
             </div>
 
@@ -212,9 +202,13 @@
 
                 <!-- University Overview (Demo: NUS) -->
                 <div id="universityOverview" class="university-overview">
-                    <!-- University Header -->
-                    <div class="university-header">
-                        <div class="university-logo-large" id="uniLogoLarge">��🇬</div>
+                    <!-- University Header Section with School Stats -->
+                    <div class="university-header-section">
+                        <!-- University Header -->
+                        <div class="university-header">
+                        <div class="university-logo-large" id="uniLogoLarge">
+                            <img src="resources/icons/nus.jpg" alt="NUS Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+                        </div>
                         <div class="university-info">
                             <h2 id="uniName">National University of Singapore</h2>
                             <p class="university-location" id="uniLocation">📍 Singapore, Singapore</p>
@@ -228,16 +222,111 @@
                         </button>
                     </div>
 
-                    <!-- Application Progress -->
-                    <div class="card application-progress-card">
-                        <div class="card-header-custom">
-                            <h3>Application Progress</h3>
-                            <span class="progress-percentage" id="progressPercentage">56%</span>
+                        <!-- School-Specific Stats Grid -->
+                        <div class="school-stats-grid">
+                            <div class="school-stat-card">
+                                <span class="stat-icon-small">📊</span>
+                                <div class="stat-content">
+                                    <div class="stat-value">56%</div>
+                                    <div class="stat-label-small">Progress</div>
+                                </div>
+                            </div>
+                            <div class="school-stat-card">
+                                <span class="stat-icon-small">📅</span>
+                                <div class="stat-content">
+                                    <div class="stat-value">Jan 15, 2026</div>
+                                    <div class="stat-label-small">Deadline</div>
+                                </div>
+                            </div>
+                            <div class="school-stat-card">
+                                <span class="stat-icon-small">✅</span>
+                                <div class="stat-content">
+                                    <div class="stat-value">5 of 9</div>
+                                    <div class="stat-label-small">Requirements Met</div>
+                                </div>
+                            </div>
+                            <div class="school-stat-card">
+                                <span class="stat-icon-small">💵</span>
+                                <div class="stat-content">
+                                    <div class="stat-value">$50</div>
+                                    <div class="stat-label-small">Application Fee</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="progress-bar-custom">
+                    </div>
+
+                    <!-- Admission Probability -->
+                    <div class="admission-info-section">
+                        <div class="card admission-card">
+                            <h3>Admission Probability</h3>
+                            <div class="admission-content-flex">
+                                <div class="admission-score-circle">
+                                    <svg viewBox="0 0 100 100" class="score-svg">
+                                        <circle class="score-bg" cx="50" cy="50" r="40"></circle>
+                                        <circle class="score-fill" id="scoreFill" cx="50" cy="50" r="40" style="stroke-dashoffset: 63"></circle>
+                                    </svg>
+                                    <div class="score-text">
+                                        <span class="score-number" id="admissionScore">85</span>
+                                        <span class="score-label">%</span>
+                                    </div>
+                                </div>
+                                <div class="admission-factors">
+                                    <h4>Key Factors</h4>
+                                    <div class="factor-list" id="factorList">
+                                        <div class="factor-item">
+                                            <span class="factor-name">
+                                                <span class="factor-indicator positive"></span>
+                                                Your GPA (3.8) exceeds requirement (3.5)
+                                            </span>
+                                            <span class="factor-value">✓</span>
+                                        </div>
+                                        <div class="factor-item">
+                                            <span class="factor-name">
+                                                <span class="factor-indicator positive"></span>
+                                                IELTS 7.5 meets English requirement
+                                            </span>
+                                            <span class="factor-value">✓</span>
+                                        </div>
+                                        <div class="factor-item">
+                                            <span class="factor-name">
+                                                <span class="factor-indicator positive"></span>
+                                                Strong extracurricular activities
+                                            </span>
+                                            <span class="factor-value">Good</span>
+                                        </div>
+                                        <div class="factor-item">
+                                            <span class="factor-name">
+                                                <span class="factor-indicator neutral"></span>
+                                                Lack of research experience
+                                            </span>
+                                            <span class="factor-value">Consider</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Application Progress -->
+                    </div>
+
+                    <!-- Application Progress & Requirements (Merged) -->
+                    <div class="card application-requirements-card">
+                        <div class="card-header-custom">
+                            <div>
+                                <h3>Application Progress & Requirements</h3>
+                                <p style="margin: 0.5rem 0 0 0; color: #6b7280; font-size: 0.875rem;">Track and manage your application documents</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <span class="progress-percentage" id="progressPercentage">56%</span>
+                                <div style="font-size: 0.875rem; color: #6b7280; margin-top: 0.25rem;">5 of 9 completed</div>
+                            </div>
+                        </div>
+                        <div class="progress-bar-custom" style="margin-bottom: 1.5rem;">
                             <div class="progress-fill" id="progressFill" style="width: 56%"></div>
                         </div>
-                        <div class="application-status-selector">
+                        
+                        <div class="application-status-selector" style="margin-bottom: 2rem;">
                             <label>Application Status:</label>
                             <select id="applicationStatus" class="form-select">
                                 <option value="not-started">Not Started</option>
@@ -250,11 +339,141 @@
                                 <option value="rejected">Rejected</option>
                             </select>
                         </div>
+
+                        <!-- Requirements with Action Buttons -->
+                        <div class="requirements-action-grid">
+                            <!-- Academic Requirements -->
+                            <div class="requirement-action-section">
+                                <h4>📊 Academic Documents</h4>
+                                
+                                <div class="requirement-action-item completed">
+                                    <div class="req-action-left">
+                                        <div class="req-status-icon">✓</div>
+                                        <div class="req-info">
+                                            <div class="req-name">GPA Requirements</div>
+                                            <div class="req-detail">3.5+ GPA verified</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-action btn-action-view">View</button>
+                                </div>
+
+                                <div class="requirement-action-item completed">
+                                    <div class="req-action-left">
+                                        <div class="req-status-icon">✓</div>
+                                        <div class="req-info">
+                                            <div class="req-name">Official Transcripts</div>
+                                            <div class="req-detail">Uploaded on Oct 15, 2024</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-action btn-action-view">View</button>
+                                </div>
+                            </div>
+
+                            <!-- Test Scores -->
+                            <div class="requirement-action-section">
+                                <h4>📝 Test Scores</h4>
+                                
+                                <div class="requirement-action-item completed">
+                                    <div class="req-action-left">
+                                        <div class="req-status-icon">✓</div>
+                                        <div class="req-info">
+                                            <div class="req-name">Language Test</div>
+                                            <div class="req-detail">IELTS 7.5 • Valid until 2026</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-action btn-action-view">View</button>
+                                </div>
+
+                                <div class="requirement-action-item pending">
+                                    <div class="req-action-left">
+                                        <div class="req-status-icon">⏳</div>
+                                        <div class="req-info">
+                                            <div class="req-name">SAT/ACT Scores</div>
+                                            <div class="req-detail">Optional - Not submitted</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-action btn-action-upload">Upload</button>
+                                </div>
+                            </div>
+
+                            <!-- Personal Documents -->
+                            <div class="requirement-action-section">
+                                <h4>📄 Personal Documents</h4>
+                                
+                                <div class="requirement-action-item completed">
+                                    <div class="req-action-left">
+                                        <div class="req-status-icon">✓</div>
+                                        <div class="req-info">
+                                            <div class="req-name">Personal Statement</div>
+                                            <div class="req-detail">Draft v3 • Last edited Nov 5</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-action btn-action-edit">Edit</button>
+                                </div>
+
+                                <div class="requirement-action-item completed">
+                                    <div class="req-action-left">
+                                        <div class="req-status-icon">✓</div>
+                                        <div class="req-info">
+                                            <div class="req-name">Recommendation Letters</div>
+                                            <div class="req-detail">2 of 2 received</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-action btn-action-view">View</button>
+                                </div>
+
+                                <div class="requirement-action-item pending">
+                                    <div class="req-action-left">
+                                        <div class="req-status-icon">⏳</div>
+                                        <div class="req-info">
+                                            <div class="req-name">CV/Resume</div>
+                                            <div class="req-detail">Not uploaded yet</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-action btn-action-upload">Upload</button>
+                                </div>
+                            </div>
+
+                            <!-- Financial Documents -->
+                            <div class="requirement-action-section">
+                                <h4>💰 Financial & Payment</h4>
+                                
+                                <div class="requirement-action-item pending">
+                                    <div class="req-action-left">
+                                        <div class="req-status-icon">⏳</div>
+                                        <div class="req-info">
+                                            <div class="req-name">Financial Documents</div>
+                                            <div class="req-detail">Bank statement required</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-action btn-action-upload">Upload</button>
+                                </div>
+
+                                <div class="requirement-action-item pending">
+                                    <div class="req-action-left">
+                                        <div class="req-status-icon">💳</div>
+                                        <div class="req-info">
+                                            <div class="req-name">Application Fee</div>
+                                            <div class="req-detail">$50 USD • Not paid</div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-action btn-action-pay">Pay Now</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Requirements Checklist -->
+                    <!-- Quick Info Cards -->                    <!-- Requirements Checklist -->
                     <div class="card requirements-card">
-                        <h3>Application Requirements</h3>
+                        <div class="card-header-with-progress">
+                            <h3>Application Requirements</h3>
+                            <div class="requirement-progress-indicator">
+                                <span class="progress-text">5 of 9 completed</span>
+                                <div class="mini-progress-bar">
+                                    <div class="mini-progress-fill" style="width: 56%"></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="requirements-grid">
                             <!-- Academic Requirements -->
                             <div class="requirement-section">
@@ -278,7 +497,7 @@
 
                             <!-- Test Scores -->
                             <div class="requirement-section">
-                                <h4>📝 Test Scores</h4>
+                                <h4>� Test Scores</h4>
                                 <div class="requirement-item">
                                     <label class="requirement-checkbox">
                                         <input type="checkbox" class="req-check" data-req="language" checked>
@@ -343,56 +562,8 @@
                         </div>
                     </div>
 
-                    <!-- Admission Probability -->
-                    <div class="card admission-card">
-                        <h3>Admission Probability</h3>
-                        <div class="admission-score-circle">
-                            <svg viewBox="0 0 100 100" class="score-svg">
-                                <circle class="score-bg" cx="50" cy="50" r="40"></circle>
-                                <circle class="score-fill" id="scoreFill" cx="50" cy="50" r="40" style="stroke-dashoffset: 63"></circle>
-                            </svg>
-                            <div class="score-text">
-                                <span class="score-number" id="admissionScore">85</span>
-                                <span class="score-label">%</span>
-                            </div>
-                        </div>
-                        <div class="admission-factors">
-                            <h4>Key Factors</h4>
-                            <div class="factor-list" id="factorList">
-                                <div class="factor-item">
-                                    <span class="factor-name">
-                                        <span class="factor-indicator positive"></span>
-                                        Your GPA (3.8) exceeds requirement (3.5)
-                                    </span>
-                                    <span class="factor-value">✓</span>
-                                </div>
-                                <div class="factor-item">
-                                    <span class="factor-name">
-                                        <span class="factor-indicator positive"></span>
-                                        IELTS 7.5 meets English requirement
-                                    </span>
-                                    <span class="factor-value">✓</span>
-                                </div>
-                                <div class="factor-item">
-                                    <span class="factor-name">
-                                        <span class="factor-indicator positive"></span>
-                                        Strong extracurricular activities
-                                    </span>
-                                    <span class="factor-value">Good</span>
-                                </div>
-                                <div class="factor-item">
-                                    <span class="factor-name">
-                                        <span class="factor-indicator neutral"></span>
-                                        Lack of research experience
-                                    </span>
-                                    <span class="factor-value">Consider</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Quick Info Cards -->
-                    <div class="info-cards-grid">
+                        <div class="info-cards-grid">
                         <div class="info-card">
                             <div class="info-icon">💵</div>
                             <div class="info-content">

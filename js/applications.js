@@ -14,13 +14,10 @@ class ApplicationManager {
         this.updateStats();
         this.setupEventListeners();
         
-        // Select NUS (demo university) by default, or first application if NUS not found
-        const nusApp = this.applications.find(app => app.universityId === 'nus');
-        if (nusApp) {
-            this.selectUniversity('nus');
-        } else if (this.applications.length > 0) {
-            this.selectUniversity(this.applications[0].universityId);
-        }
+        // Don't call selectUniversity - let HTML content stay as-is
+        // Just set up interactive elements for the default visible NUS
+        this.selectedUniversityId = 'nus';
+        this.setupInteractiveElementsOnly();
     }
 
     async loadUniversities() {
@@ -221,66 +218,49 @@ class ApplicationManager {
     }
 
     renderUniversityDetail() {
-        const university = this.getUniversityById(this.selectedUniversityId);
+        // DO NOT render content - HTML already has demo content
+        // This method now only handles updating active states
         const application = this.getApplicationByUniversityId(this.selectedUniversityId);
         
-        if (!university || !application) {
-            // For demo, don't hide overview - NUS is already visible
+        if (!application) {
             return;
         }
 
+        // Just ensure overview is visible and empty state is hidden
         document.getElementById('emptyState').style.display = 'none';
         document.getElementById('universityOverview').style.display = 'block';
-
-        // Only update if we're switching universities (not on initial NUS load)
-        const currentName = document.getElementById('uniName').textContent;
-        if (currentName === university.name) {
-            // Already showing the right university, just update interactive elements
-            this.updateInteractiveElements(university, application);
-            return;
-        }
-
-        // Update university header
-        document.getElementById('uniLogoLarge').textContent = university.logo;
-        document.getElementById('uniName').textContent = university.name;
-        document.getElementById('uniLocation').textContent = `📍 ${university.city}, ${university.country}`;
-        document.getElementById('uniRanking').textContent = `#${university.global_ranking} Global`;
         
-        // Use predefined fit score from application
-        const fitScore = application.fitScore;
-        document.getElementById('uniFitScore').textContent = `${fitScore}% Fit`;
-
-        // Update progress
-        this.updateProgress(application);
-
-        // Update application status
-        const statusSelect = document.getElementById('applicationStatus');
-        statusSelect.value = application.status;
-        statusSelect.onchange = (e) => this.updateApplicationStatus(e.target.value);
-
-        // Update requirements
-        this.updateRequirements(university, application);
-
-        // Update admission score using fit score from application
-        this.updateAdmissionScore(university, application.fitScore);
-
-        // Update info cards
-        document.getElementById('infoTuition').textContent = university.tuition_range;
-        document.getElementById('infoAcceptance').textContent = `${university.acceptance_rate}%`;
-        document.getElementById('infoInternational').textContent = '25%'; // Default value
-        document.getElementById('infoStudents').textContent = '15,000+'; // Default value
+        // Set up interactive elements only (checkboxes, dropdowns)
+        this.setupInteractiveElementsOnly();
     }
 
-    updateInteractiveElements(university, application) {
+    setupInteractiveElementsOnly() {
+        // Only set up interactive elements without modifying content
+        const application = this.getApplicationByUniversityId(this.selectedUniversityId);
+        if (!application) return;
+
         // Set up status selector
         const statusSelect = document.getElementById('applicationStatus');
-        statusSelect.onchange = (e) => this.updateApplicationStatus(e.target.value);
+        if (statusSelect) {
+            statusSelect.value = application.status;
+            statusSelect.onchange = (e) => this.updateApplicationStatus(e.target.value);
+        }
 
         // Set up requirements checkboxes
-        this.updateRequirements(university, application);
+        document.querySelectorAll('.req-check').forEach(checkbox => {
+            const reqKey = checkbox.dataset.req;
+            checkbox.checked = application.requirements[reqKey] || false;
+            
+            checkbox.onchange = () => {
+                application.requirements[reqKey] = checkbox.checked;
+                this.updateProgress(application);
+                this.renderUniversityList();
+            };
+        });
     }
 
     updateProgress(application) {
+        // Update progress in sidebar only - don't touch main content
         const totalReqs = Object.keys(application.requirements).length;
         const completedReqs = Object.values(application.requirements).filter(v => v).length;
         const progress = Math.round((completedReqs / totalReqs) * 100);
@@ -288,16 +268,14 @@ class ApplicationManager {
         application.progress = progress;
         this.saveApplications();
 
-        document.getElementById('progressPercentage').textContent = `${progress}%`;
-        document.getElementById('progressFill').style.width = `${progress}%`;
+        // Don't update main content - HTML has demo data
+        // Only update if elements exist and we want to sync them
+        // For now, leave the HTML demo values as-is
     }
 
     updateRequirements(university, application) {
-        // Update requirement values
-        document.getElementById('reqGPA').textContent = `${university.required_gpa}+ GPA`;
-        document.getElementById('reqLanguage').textContent = university.required_certificates.join(', ') || 'Required';
-
-        // Setup checkboxes
+        // Don't update requirement values - HTML has demo data
+        // Only set up checkbox handlers
         document.querySelectorAll('.req-check').forEach(checkbox => {
             const reqKey = checkbox.dataset.req;
             checkbox.checked = application.requirements[reqKey] || false;
@@ -332,6 +310,11 @@ class ApplicationManager {
     }
 
     updateAdmissionScore(university, fitScore) {
+        // DISABLED - HTML has demo content with school-specific summary
+        // Don't overwrite the personalized factors in HTML
+        return;
+        
+        /* Original code commented out to preserve HTML demo content
         const score = fitScore || this.calculateFitScore(university);
         document.getElementById('admissionScore').textContent = score;
 
@@ -343,6 +326,7 @@ class ApplicationManager {
         // Generate realistic, personalized factors based on university
         const factorsHTML = this.generatePersonalizedFactors(university, score);
         document.getElementById('factorList').innerHTML = factorsHTML;
+        */
     }
 
     generatePersonalizedFactors(university, score) {
@@ -457,6 +441,47 @@ class ApplicationManager {
             if (confirm('Are you sure you want to remove this university from your applications?')) {
                 this.removeApplication(this.selectedUniversityId);
             }
+        });
+
+        // Action buttons for requirements
+        this.setupActionButtons();
+    }
+
+    setupActionButtons() {
+        // View buttons
+        document.querySelectorAll('.btn-action-view').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const reqName = btn.closest('.requirement-action-item').querySelector('.req-name').textContent;
+                alert(`📄 Viewing: ${reqName}\n\nThis would open a document viewer or detail page.`);
+            });
+        });
+
+        // Edit buttons
+        document.querySelectorAll('.btn-action-edit').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const reqName = btn.closest('.requirement-action-item').querySelector('.req-name').textContent;
+                alert(`✏️ Editing: ${reqName}\n\nThis would open the essay editor or document editor.`);
+            });
+        });
+
+        // Upload buttons
+        document.querySelectorAll('.btn-action-upload').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const reqName = btn.closest('.requirement-action-item').querySelector('.req-name').textContent;
+                alert(`📤 Upload: ${reqName}\n\nThis would open a file upload dialog.`);
+            });
+        });
+
+        // Pay Now button
+        document.querySelectorAll('.btn-action-pay').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const reqName = btn.closest('.requirement-action-item').querySelector('.req-name').textContent;
+                alert(`💳 Payment: ${reqName}\n\nThis would redirect to the payment gateway.`);
+            });
         });
     }
 
