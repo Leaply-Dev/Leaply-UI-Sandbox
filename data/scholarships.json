@@ -1,0 +1,454 @@
+{
+  "scholarships": [
+    {
+      "id": "sch-001",
+      "name": "Fulbright Foreign Student Program",
+      "provider": "U.S. Department of State",
+      "country": "USA",
+      "amount": {
+        "type": "Full",
+        "value": "Full tuition + living expenses",
+        "currency": "USD"
+      },
+      "degree_levels": ["Graduate", "PhD"],
+      "field_of_study": ["All fields"],
+      "eligibility": {
+        "nationality": "Non-U.S. citizens",
+        "gpa_min": 3.5,
+        "language": ["TOEFL ≥ 80", "IELTS ≥ 6.5"],
+        "other": "Demonstrated leadership potential"
+      },
+      "deadline": "2026-10-15",
+      "application_requirements": ["Research proposal", "Letters of recommendation", "Language proficiency", "Interview"],
+      "benefits": ["Full tuition coverage", "Monthly stipend", "Health insurance", "Travel allowance"],
+      "website": "https://foreign.fulbrightonline.org",
+      "featured": true,
+      "description": "Prestigious U.S. government scholarship for graduate study, providing full funding and cultural exchange opportunities."
+    },
+    {
+      "id": "sch-002",
+      "name": "Chevening Scholarships",
+      "provider": "UK Government",
+      "country": "UK",
+      "amount": {
+        "type": "Full",
+        "value": "Full funding",
+        "currency": "GBP"
+      },
+      "degree_levels": ["Graduate"],
+      "field_of_study": ["All fields"],
+      "eligibility": {
+        "nationality": "Chevening-eligible countries",
+        "gpa_min": 3.3,
+        "language": ["IELTS ≥ 6.5"],
+        "other": "2+ years work experience, leadership potential"
+      },
+      "deadline": "2026-11-07",
+      "application_requirements": ["Personal statement", "Two references", "Unconditional offer from UK university"],
+      "benefits": ["Full tuition", "Living stipend", "Travel costs", "Visa fees", "Arrival allowance"],
+      "website": "https://www.chevening.org",
+      "featured": true,
+      "description": "UK government's global scholarship programme for future leaders pursuing one-year master's degrees."
+    },
+    {
+      "id": "sch-003",
+      "name": "DAAD Scholarships",
+      "provider": "German Academic Exchange Service",
+      "country": "Germany",
+      "amount": {
+        "type": "Partial",
+        "value": "€1,200/month",
+        "currency": "EUR"
+      },
+      "degree_levels": ["Graduate", "PhD"],
+      "field_of_study": ["All fields"],
+      "eligibility": {
+        "nationality": "International students",
+        "gpa_min": 3.0,
+        "language": ["German or English proficiency depending on program"],
+        "other": "Bachelor's degree completed"
+      },
+      "deadline": "2026-09-30",
+      "application_requirements": ["CV", "Motivation letter", "Academic transcripts", "Language certificate"],
+      "benefits": ["Monthly stipend", "Health insurance", "Travel allowance"],
+      "website": "https://www.daad.de",
+      "featured": true,
+      "description": "Germany's premier scholarship supporting international students with monthly stipends and insurance."
+    },
+    {
+      "id": "sch-004",
+      "name": "Rhodes Scholarship",
+      "provider": "Rhodes Trust",
+      "country": "UK",
+      "amount": {
+        "type": "Full",
+        "value": "Full funding",
+        "currency": "GBP"
+      },
+      "degree_levels": ["Graduate"],
+      "field_of_study": ["All fields"],
+      "eligibility": {
+        "nationality": "Selected countries",
+        "gpa_min": 3.7,
+        "language": ["English proficiency"],
+        "other": "Age 18-28, demonstrated academic excellence and leadership"
+      },
+      "deadline": "2026-10-01",
+      "application_requirements": ["Personal statement", "8 references", "Interview"],
+      "benefits": ["Full tuition at Oxford", "Living stipend", "Travel costs", "Health insurance"],
+      "website": "https://www.rhodeshouse.ox.ac.uk",
+      "featured": true,
+      "description": "World's most prestigious scholarship for study at Oxford University, seeking exceptional all-rounders."
+    },
+    {
+      "id": "sch-005",
+      "name": "Gates Cambridge Scholarship",
+      "provider": "Bill & Melinda Gates Foundation",
+      "country": "UK",
+      "amount": {
+        "type": "Full",
+        "value": "Full funding",
+        "currency": "GBP"
+      },
+      "degree_levels": ["Graduate", "PhD"],
+      "field_of_study": ["All fields"],
+      "eligibility": {
+        "nationality": "Non-UK citizens",
+        "gpa_min": 3.7,
+        "language": ["IELTS ≥ 7.0", "TOEFL ≥ 100"],
+        "other": "Outstanding intellectual ability, leadership potential"
+      },
+      "deadline": "2026-12-05",
+      "application_requirements": ["Research proposal", "Personal statement", "Two references", "Cambridge application"],
+      "benefits": ["Full tuition", "Maintenance allowance", "Travel costs", "Family allowance", "Academic development"],
+      "website": "https://www.gatescambridge.org",
+      "featured": true,
+      "description": "Highly competitive scholarship for outstanding students to pursue graduate study at Cambridge."
+    },
+    {
+      "id": "sch-006",
+      "name": "Erasmus Mundus Joint Masters",
+      "provider": "European Commission",
+      "country": "Europe (Multiple)",
+      "amount": {
+        "type": "Partial",
+        "value": "€1,400/month + tuition",
+        "currency": "EUR"
+      },
+      "degree_levels": ["Graduate"],
+      "field_of_study": ["Various specific programs"],
+      "eligibility": {
+        "nationality": "Any",
+        "gpa_min": 3.0,
+        "language": ["Program-specific"],
+        "other": "Bachelor's degree in relevant field"
+      },
+      "deadline": "2026-01-15",
+      "application_requirements": ["Online application", "Transcripts", "Motivation letter", "References"],
+      "benefits": ["Tuition coverage", "Monthly stipend", "Travel costs", "Insurance", "Study in multiple European countries"],
+      "website": "https://ec.europa.eu/programmes/erasmus-plus",
+      "featured": false,
+      "description": "EU-funded scholarships for international master's programs involving study in multiple countries."
+    },
+    {
+      "id": "sch-007",
+      "name": "Australia Awards Scholarships",
+      "provider": "Australian Government",
+      "country": "Australia",
+      "amount": {
+        "type": "Full",
+        "value": "Full funding",
+        "currency": "AUD"
+      },
+      "degree_levels": ["Graduate", "PhD"],
+      "field_of_study": ["Development-related fields"],
+      "eligibility": {
+        "nationality": "Developing countries (specific list)",
+        "gpa_min": 3.0,
+        "language": ["IELTS ≥ 6.5"],
+        "other": "Commitment to return to home country"
+      },
+      "deadline": "2026-04-30",
+      "application_requirements": ["Online application", "Academic transcripts", "Development statement", "References"],
+      "benefits": ["Full tuition", "Living allowance", "Airfare", "Health insurance", "Pre-departure training"],
+      "website": "https://www.australiaawardspng.org",
+      "featured": false,
+      "description": "Australian government's flagship scholarship for students from developing countries."
+    },
+    {
+      "id": "sch-008",
+      "name": "Swiss Government Excellence Scholarships",
+      "provider": "Swiss Confederation",
+      "country": "Switzerland",
+      "amount": {
+        "type": "Partial",
+        "value": "CHF 1,920/month",
+        "currency": "CHF"
+      },
+      "degree_levels": ["Graduate", "PhD"],
+      "field_of_study": ["All fields"],
+      "eligibility": {
+        "nationality": "Selected countries",
+        "gpa_min": 3.5,
+        "language": ["Program language proficiency"],
+        "other": "Master's degree for PhD applicants"
+      },
+      "deadline": "2026-12-01",
+      "application_requirements": ["Research proposal", "CV", "Academic transcripts", "Acceptance from Swiss university"],
+      "benefits": ["Monthly stipend", "Tuition waiver", "Health insurance", "Housing allowance"],
+      "website": "https://www.sbfi.admin.ch",
+      "featured": false,
+      "description": "Swiss government scholarships for postgraduate researchers to study at Swiss universities."
+    },
+    {
+      "id": "sch-009",
+      "name": "Japanese MEXT Scholarship",
+      "provider": "Japanese Ministry of Education",
+      "country": "Japan",
+      "amount": {
+        "type": "Full",
+        "value": "¥143,000-148,000/month + tuition",
+        "currency": "JPY"
+      },
+      "degree_levels": ["Undergraduate", "Graduate", "PhD"],
+      "field_of_study": ["All fields"],
+      "eligibility": {
+        "nationality": "Non-Japanese",
+        "gpa_min": 3.0,
+        "language": ["Japanese proficiency (for most programs)"],
+        "other": "Age limits apply by program"
+      },
+      "deadline": "2026-05-31",
+      "application_requirements": ["Application form", "Academic transcripts", "Research plan", "Health certificate", "Embassy recommendation"],
+      "benefits": ["Full tuition waiver", "Monthly stipend", "Airfare", "No tuition fees", "Japanese language training"],
+      "website": "https://www.mext.go.jp",
+      "featured": false,
+      "description": "Japanese government scholarship covering full costs for international students at all levels."
+    },
+    {
+      "id": "sch-010",
+      "name": "Rotary Peace Fellowship",
+      "provider": "Rotary International",
+      "country": "Multiple (Rotary Peace Centers)",
+      "amount": {
+        "type": "Full",
+        "value": "Full funding",
+        "currency": "USD"
+      },
+      "degree_levels": ["Graduate"],
+      "field_of_study": ["Peace and conflict resolution", "International relations"],
+      "eligibility": {
+        "nationality": "Any",
+        "gpa_min": 3.0,
+        "language": ["English proficiency"],
+        "other": "3+ years relevant work experience"
+      },
+      "deadline": "2026-05-15",
+      "application_requirements": ["Online application", "Work experience proof", "Essays", "References", "Interview"],
+      "benefits": ["Full tuition", "Living expenses", "Travel costs", "Internship opportunities"],
+      "website": "https://www.rotary.org/en/our-programs/peace-fellowships",
+      "featured": false,
+      "description": "Fellowship for leaders committed to peace and conflict resolution at designated universities."
+    },
+    {
+      "id": "sch-011",
+      "name": "GREAT Scholarships",
+      "provider": "British Council & UK Universities",
+      "country": "UK",
+      "amount": {
+        "type": "Partial",
+        "value": "£10,000",
+        "currency": "GBP"
+      },
+      "degree_levels": ["Graduate"],
+      "field_of_study": ["Various fields at participating universities"],
+      "eligibility": {
+        "nationality": "Selected countries",
+        "gpa_min": 3.0,
+        "language": ["IELTS ≥ 6.5"],
+        "other": "Meet university admission requirements"
+      },
+      "deadline": "2026-01-31",
+      "application_requirements": ["University application", "Scholarship essay", "Transcripts"],
+      "benefits": ["£10,000 tuition fee reduction"],
+      "website": "https://www.britishcouncil.org/study-work-abroad/outside-uk/scholarships",
+      "featured": false,
+      "description": "Partial tuition scholarships for students from selected countries to study in the UK."
+    },
+    {
+      "id": "sch-012",
+      "name": "Eiffel Excellence Scholarship",
+      "provider": "French Ministry of Europe and Foreign Affairs",
+      "country": "France",
+      "amount": {
+        "type": "Partial",
+        "value": "€1,400/month",
+        "currency": "EUR"
+      },
+      "degree_levels": ["Graduate", "PhD"],
+      "field_of_study": ["Engineering", "Economics", "Law", "Political Science"],
+      "eligibility": {
+        "nationality": "Non-French, under 30 (Masters) or 35 (PhD)",
+        "gpa_min": 3.5,
+        "language": ["French or English proficiency"],
+        "other": "Nominated by French higher education institution"
+      },
+      "deadline": "2026-01-10",
+      "application_requirements": ["Nomination by institution", "CV", "Study plan"],
+      "benefits": ["Monthly stipend", "Travel allowance", "Health insurance", "Cultural activities"],
+      "website": "https://www.campusfrance.org/en/eiffel-scholarship-program-of-excellence",
+      "featured": false,
+      "description": "French government scholarship for top international students in selected fields."
+    },
+    {
+      "id": "sch-013",
+      "name": "Vanier Canada Graduate Scholarships",
+      "provider": "Government of Canada",
+      "country": "Canada",
+      "amount": {
+        "type": "Full",
+        "value": "CAD $50,000/year for 3 years",
+        "currency": "CAD"
+      },
+      "degree_levels": ["PhD"],
+      "field_of_study": ["Health sciences", "Natural sciences", "Engineering", "Social sciences", "Humanities"],
+      "eligibility": {
+        "nationality": "Any",
+        "gpa_min": 3.7,
+        "language": ["English or French proficiency"],
+        "other": "Nominated by Canadian university, demonstrated leadership"
+      },
+      "deadline": "2026-11-01",
+      "application_requirements": ["Nomination by institution", "Research proposal", "Academic achievements", "Leadership evidence"],
+      "benefits": ["$50,000 CAD annual stipend for 3 years"],
+      "website": "https://vanier.gc.ca",
+      "featured": false,
+      "description": "Canada's premier doctoral scholarship for exceptional students demonstrating leadership skills."
+    },
+    {
+      "id": "sch-014",
+      "name": "Chinese Government Scholarship",
+      "provider": "China Scholarship Council",
+      "country": "China",
+      "amount": {
+        "type": "Full",
+        "value": "CNY 2,500-3,500/month + tuition",
+        "currency": "CNY"
+      },
+      "degree_levels": ["Undergraduate", "Graduate", "PhD"],
+      "field_of_study": ["All fields"],
+      "eligibility": {
+        "nationality": "Non-Chinese",
+        "gpa_min": 3.0,
+        "language": ["Chinese proficiency (HSK) or English for English-taught programs"],
+        "other": "Age limits apply"
+      },
+      "deadline": "2026-04-30",
+      "application_requirements": ["Online application", "Study plan", "Recommendation letters", "Physical examination"],
+      "benefits": ["Full tuition waiver", "Monthly stipend", "Accommodation allowance", "Medical insurance"],
+      "website": "https://www.campuschina.org",
+      "featured": false,
+      "description": "Comprehensive scholarship from Chinese government for international students at all levels."
+    },
+    {
+      "id": "sch-015",
+      "name": "Knight-Hennessy Scholars",
+      "provider": "Stanford University",
+      "country": "USA",
+      "amount": {
+        "type": "Full",
+        "value": "Full funding",
+        "currency": "USD"
+      },
+      "degree_levels": ["Graduate", "PhD", "Professional"],
+      "field_of_study": ["All Stanford graduate programs"],
+      "eligibility": {
+        "nationality": "Any",
+        "gpa_min": 3.5,
+        "language": ["TOEFL ≥ 100", "IELTS ≥ 7.0"],
+        "other": "Demonstrated leadership and civic commitment"
+      },
+      "deadline": "2026-10-12",
+      "application_requirements": ["Knight-Hennessy application", "Stanford program application", "Essays", "References", "Video submissions"],
+      "benefits": ["Full funding for up to 3 years", "Leadership development program", "Stipend for living expenses", "Travel funds"],
+      "website": "https://knight-hennessy.stanford.edu",
+      "featured": true,
+      "description": "Stanford's flagship scholarship developing future global leaders across all graduate disciplines."
+    },
+    {
+      "id": "sch-016",
+      "name": "Commonwealth Scholarships",
+      "provider": "Commonwealth Scholarship Commission",
+      "country": "UK",
+      "amount": {
+        "type": "Full",
+        "value": "Full funding",
+        "currency": "GBP"
+      },
+      "degree_levels": ["Graduate", "PhD"],
+      "field_of_study": ["Development-related fields"],
+      "eligibility": {
+        "nationality": "Commonwealth countries",
+        "gpa_min": 3.3,
+        "language": ["IELTS ≥ 6.5"],
+        "other": "Unable to afford UK study without scholarship"
+      },
+      "deadline": "2026-12-15",
+      "application_requirements": ["Online application", "Development impact statement", "References", "Academic transcripts"],
+      "benefits": ["Full tuition", "Living allowance", "Airfare", "Thesis grant", "Warm clothing allowance"],
+      "website": "https://cscuk.fcdo.gov.uk",
+      "featured": false,
+      "description": "UK government scholarships for Commonwealth citizens to pursue development-related studies."
+    },
+    {
+      "id": "sch-017",
+      "name": "Schwarzman Scholars",
+      "provider": "Schwarzman College, Tsinghua University",
+      "country": "China",
+      "amount": {
+        "type": "Full",
+        "value": "Full funding",
+        "currency": "USD"
+      },
+      "degree_levels": ["Graduate"],
+      "field_of_study": ["Global Affairs", "Public Policy", "Economics", "International Studies"],
+      "eligibility": {
+        "nationality": "Any",
+        "gpa_min": 3.5,
+        "language": ["English proficiency"],
+        "other": "Age 18-28, demonstrated leadership"
+      },
+      "deadline": "2026-09-21",
+      "application_requirements": ["Online application", "Essays", "Video interview", "References", "Transcripts"],
+      "benefits": ["Full tuition", "Room and board", "Travel stipend", "In-program travel", "Leadership development"],
+      "website": "https://www.schwarzmanscholars.org",
+      "featured": true,
+      "description": "One-year master's program at Tsinghua University preparing future leaders to understand China."
+    },
+    {
+      "id": "sch-018",
+      "name": "ASEAN Undergraduate Scholarship",
+      "provider": "National University of Singapore",
+      "country": "Singapore",
+      "amount": {
+        "type": "Full",
+        "value": "Full tuition + allowances",
+        "currency": "SGD"
+      },
+      "degree_levels": ["Undergraduate"],
+      "field_of_study": ["All fields at NUS"],
+      "eligibility": {
+        "nationality": "ASEAN countries (except Singapore)",
+        "gpa_min": 3.5,
+        "language": ["IELTS ≥ 6.0", "TOEFL ≥ 85"],
+        "other": "Strong academic and co-curricular records"
+      },
+      "deadline": "2026-03-15",
+      "application_requirements": ["NUS application", "Scholarship application", "Essays", "Interview"],
+      "benefits": ["Full tuition coverage", "Annual living allowance", "Accommodation allowance", "One-time settling-in allowance"],
+      "website": "https://www.nus.edu.sg/oam/scholarships",
+      "featured": false,
+      "description": "Full scholarship for outstanding ASEAN students to pursue undergraduate studies at NUS."
+    }
+  ]
+}
