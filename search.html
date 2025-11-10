@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Universities & Scholarships - Leaply</title>
+    <meta name="description" content="Find the perfect university and scholarships that match your profile. Search and filter from top institutions worldwide.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/search.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="resources/icon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="resources/Logo.png" alt="Leaply Logo" class="logo-image">
+            </a>
+            
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="search.html" class="nav-link active">Explore</a></li>
+                    <li><a href="applications.html" class="nav-link">Applications</a></li>
+                    <li><a href="ai-guide.html" class="nav-link">Persona Lab</a></li>
+                    <li><a href="profile.html" class="btn btn-primary">Dashboard</a></li>
+                </ul>
+            </nav>
+            
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav">
+            <ul class="nav-list">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="search.html" class="nav-link active">Explore</a></li>
+                <li><a href="applications.html" class="nav-link">Applications</a></li>
+                <li><a href="ai-guide.html" class="nav-link">Persona Lab</a></li>
+                <li><a href="profile.html" class="btn btn-primary">Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Search Hero Section -->
+    <section class="search-hero">
+        <div class="container">
+            <h1>Discover Your Perfect Match</h1>
+            <p class="hero-subtitle">Search from 1000+ universities and scholarships worldwide</p>
+            
+            <!-- Search Bar -->
+            <div class="search-bar-container">
+                <div class="search-icon">🔍</div>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search universities, programs, or scholarships...">
+                <button class="btn btn-primary search-btn" id="searchBtn">Search</button>
+            </div>
+
+            <!-- Quick Filters -->
+            <div class="quick-filters">
+                <span class="filter-label">Popular:</span>
+                <button class="filter-chip" data-country="USA">🇺🇸 USA</button>
+                <button class="filter-chip" data-country="UK">🇬🇧 UK</button>
+                <button class="filter-chip" data-country="Canada">🇨🇦 Canada</button>
+                <button class="filter-chip" data-country="Australia">🇦🇺 Australia</button>
+                <button class="filter-chip" data-field="Computer Science">💻 Computer Science</button>
+                <button class="filter-chip" data-field="Business">💼 Business</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="search-content">
+        <div class="container">
+            <!-- Tabs -->
+            <div class="search-tabs">
+                <button class="tab-btn active" data-tab="universities">
+                    <span class="tab-icon">🎓</span>
+                    <span class="tab-text">Universities</span>
+                    <span class="tab-count" id="universityCount">0</span>
+                </button>
+                <button class="tab-btn" data-tab="scholarships">
+                    <span class="tab-icon">💰</span>
+                    <span class="tab-text">Scholarships</span>
+                    <span class="tab-count" id="scholarshipCount">0</span>
+                </button>
+            </div>
+
+            <div class="search-layout">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar">
+                    <div class="filters-header">
+                        <h3>Filters</h3>
+                        <button class="btn-clear-filters" id="clearFilters">Clear All</button>
+                    </div>
+
+                    <!-- University Filters -->
+                    <div id="universityFilters" class="filters-container">
+                        <!-- Country Filter -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Country</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="country" value="USA">
+                                    <span>United States</span>
+                                    <span class="filter-count">(7)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="country" value="UK">
+                                    <span>United Kingdom</span>
+                                    <span class="filter-count">(3)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="country" value="Canada">
+                                    <span>Canada</span>
+                                    <span class="filter-count">(2)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="country" value="Australia">
+                                    <span>Australia</span>
+                                    <span class="filter-count">(1)</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="country" value="Singapore">
+                                    <span>Singapore</span>
+                                    <span class="filter-count">(1)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Ranking Filter -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Global Ranking</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="ranking" value="1-10">
+                                    <span>Top 10</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="ranking" value="11-50">
+                                    <span>Top 11-50</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="ranking" value="51-100">
+                                    <span>Top 51-100</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Tuition Range Filter -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Tuition Range (USD/year)</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="tuition" value="0-10000">
+                                    <span>Under $10,000</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="tuition" value="10000-30000">
+                                    <span>$10,000 - $30,000</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="tuition" value="30000-50000">
+                                    <span>$30,000 - $50,000</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="tuition" value="50000+">
+                                    <span>$50,000+</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Field of Study Filter -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Field of Study</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="field" value="Engineering">
+                                    <span>Engineering</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="field" value="Computer Science">
+                                    <span>Computer Science</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="field" value="Business">
+                                    <span>Business</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="field" value="Medicine">
+                                    <span>Medicine</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="field" value="Arts">
+                                    <span>Arts & Humanities</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="field" value="Sciences">
+                                    <span>Sciences</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Scholarship Availability -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Scholarship Availability</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="scholarship" value="yes">
+                                    <span>Offers Scholarships</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scholarship Filters -->
+                    <div id="scholarshipFilters" class="filters-container" style="display: none;">
+                        <!-- Funding Type Filter -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Funding Type</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="funding" value="Full">
+                                    <span>Full Funding</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="funding" value="Partial">
+                                    <span>Partial Funding</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Degree Level Filter -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Degree Level</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="degree" value="Undergraduate">
+                                    <span>Undergraduate</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="degree" value="Graduate">
+                                    <span>Graduate</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="degree" value="PhD">
+                                    <span>PhD</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Country Filter for Scholarships -->
+                        <div class="filter-group">
+                            <h4 class="filter-title">Destination Country</h4>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="sch-country" value="USA">
+                                    <span>United States</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="sch-country" value="UK">
+                                    <span>United Kingdom</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="sch-country" value="Canada">
+                                    <span>Canada</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="sch-country" value="Australia">
+                                    <span>Australia</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Results Section -->
+                <main class="results-section">
+                    <!-- Results Header -->
+                    <div class="results-header">
+                        <div class="results-info">
+                            <h2 id="resultsTitle">All Universities</h2>
+                            <p id="resultsCount">Showing 0 results</p>
+                        </div>
+                        <div class="results-controls">
+                            <label for="sortBy">Sort by:</label>
+                            <select id="sortBy" class="form-select form-select-sm">
+                                <option value="fit">Best Fit</option>
+                                <option value="ranking">Ranking</option>
+                                <option value="tuition-low">Tuition: Low to High</option>
+                                <option value="tuition-high">Tuition: High to Low</option>
+                                <option value="acceptance">Acceptance Rate</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- University Results -->
+                    <div id="universityResults" class="results-grid">
+                        <!-- Cards will be dynamically inserted here -->
+                    </div>
+
+                    <!-- Scholarship Results -->
+                    <div id="scholarshipResults" class="results-grid" style="display: none;">
+                        <!-- Scholarship cards will be dynamically inserted here -->
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="loadingState" class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Loading results...</p>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="emptyState" class="empty-state" style="display: none;">
+                        <div class="empty-icon">🔍</div>
+                        <h3>No results found</h3>
+                        <p>Try adjusting your filters or search terms</p>
+                        <button class="btn btn-primary" id="resetSearch">Reset Filters</button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
+    <!-- Data Service -->
+    <script src="js/services/dataService.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="js/main.js"></script>
+    
+    <!-- Search Page JavaScript -->
+    <script src="js/search.js"></script>
+</body>
+</html>
