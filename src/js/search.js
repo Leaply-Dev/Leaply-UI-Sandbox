@@ -11,7 +11,7 @@ class SearchManager {
             search: '',
             country: [],
             ranking: [],
-            tuition: [],
+            tuition: { min: 0, max: 100000 },
             field: [],
             scholarship: false,
             funding: [],
@@ -149,16 +149,76 @@ class SearchManager {
                 const name = checkbox.name;
                 const value = checkbox.value;
                 
-                if (name === 'scholarship') {
-                    this.filters.scholarship = checkbox.checked;
-                } else {
-                    this.toggleArrayFilter(name, value);
-                }
+                this.toggleArrayFilter(name, value);
                 
                 this.applyFilters();
                 this.renderResults();
             });
         });
+
+        // Scholarship toggle switch
+        const scholarshipToggle = document.getElementById('scholarshipToggle');
+        if (scholarshipToggle) {
+            scholarshipToggle.addEventListener('change', () => {
+                this.filters.scholarship = scholarshipToggle.checked;
+                this.applyFilters();
+                this.renderResults();
+            });
+        }
+
+        // Tuition range sliders
+        const tuitionMin = document.getElementById('tuitionMin');
+        const tuitionMax = document.getElementById('tuitionMax');
+        const tuitionMinDisplay = document.getElementById('tuitionMinDisplay');
+        const tuitionMaxDisplay = document.getElementById('tuitionMaxDisplay');
+
+        const updateTuitionDisplay = () => {
+            const min = parseInt(tuitionMin.value);
+            const max = parseInt(tuitionMax.value);
+            const sliderWrapper = tuitionMin.closest('.tuition-range-slider-wrapper');
+            const maxValue = parseInt(tuitionMin.max);
+            
+            // Ensure min doesn't exceed max and vice versa
+            if (min > max) {
+                tuitionMin.value = max;
+                this.filters.tuition.min = max;
+            } else {
+                this.filters.tuition.min = min;
+            }
+            
+            if (max < min) {
+                tuitionMax.value = min;
+                this.filters.tuition.max = min;
+            } else {
+                this.filters.tuition.max = max;
+            }
+            
+            tuitionMinDisplay.textContent = `$${this.filters.tuition.min.toLocaleString()}`;
+            tuitionMaxDisplay.textContent = `$${this.filters.tuition.max.toLocaleString()}`;
+            
+            // Update visual track
+            if (sliderWrapper) {
+                const minPercent = (this.filters.tuition.min / maxValue) * 100;
+                const maxPercent = (this.filters.tuition.max / maxValue) * 100;
+                sliderWrapper.style.setProperty('--range-start', `${minPercent}%`);
+                sliderWrapper.style.setProperty('--range-end', `${maxPercent}%`);
+            }
+        };
+
+        tuitionMin.addEventListener('input', () => {
+            updateTuitionDisplay();
+            this.applyFilters();
+            this.renderResults();
+        });
+
+        tuitionMax.addEventListener('input', () => {
+            updateTuitionDisplay();
+            this.applyFilters();
+            this.renderResults();
+        });
+
+        // Initialize display
+        updateTuitionDisplay();
 
         // Clear filters
         document.getElementById('clearFilters').addEventListener('click', () => {
@@ -195,12 +255,16 @@ class SearchManager {
             const value = checkbox.value;
             const filterKey = name === 'sch-country' ? 'schCountry' : name;
             
-            if (name === 'scholarship') {
-                checkbox.checked = this.filters.scholarship;
-            } else if (this.filters[filterKey]) {
+            if (this.filters[filterKey]) {
                 checkbox.checked = this.filters[filterKey].includes(value);
             }
         });
+
+        // Update scholarship toggle switch
+        const scholarshipToggle = document.getElementById('scholarshipToggle');
+        if (scholarshipToggle) {
+            scholarshipToggle.checked = this.filters.scholarship;
+        }
     }
 
     clearFilters() {
@@ -208,7 +272,7 @@ class SearchManager {
             search: '',
             country: [],
             ranking: [],
-            tuition: [],
+            tuition: { min: 0, max: 100000 },
             field: [],
             scholarship: false,
             funding: [],
@@ -217,8 +281,22 @@ class SearchManager {
         };
         
         document.getElementById('searchInput').value = '';
-        document.querySelectorAll('.filter-checkbox input').forEach(cb => cb.checked = false);
+        document.querySelectorAll('.filter-checkbox input').forEach(cb => {
+            cb.checked = false;
+        });
         document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+        
+        // Reset scholarship toggle
+        const scholarshipToggle = document.getElementById('scholarshipToggle');
+        if (scholarshipToggle) {
+            scholarshipToggle.checked = false;
+        }
+        
+        // Reset tuition range sliders
+        document.getElementById('tuitionMin').value = 0;
+        document.getElementById('tuitionMax').value = 100000;
+        document.getElementById('tuitionMinDisplay').textContent = '$0';
+        document.getElementById('tuitionMaxDisplay').textContent = '$100,000';
         
         this.applyFilters();
         this.renderResults();
@@ -277,17 +355,13 @@ class SearchManager {
                 }
                 
                 // Tuition filter (convert to USD for comparison)
-                if (this.filters.tuition.length > 0) {
-                    const tuitionUSD = this.convertToUSD(uni.tuition_range.min, uni.tuition_range.currency);
-                    const inRange = this.filters.tuition.some(range => {
-                        if (range === '0-10000') return tuitionUSD < 10000;
-                        if (range === '10000-30000') return tuitionUSD >= 10000 && tuitionUSD < 30000;
-                        if (range === '30000-50000') return tuitionUSD >= 30000 && tuitionUSD < 50000;
-                        if (range === '50000+') return tuitionUSD >= 50000;
-                        return false;
-                    });
-                    if (!inRange) return false;
-                }
+                const tuitionMinUSD = this.convertToUSD(uni.tuition_range.min, uni.tuition_range.currency);
+                const tuitionMaxUSD = this.convertToUSD(uni.tuition_range.max, uni.tuition_range.currency);
+                
+                // Check if university's tuition range overlaps with filter range
+                // University is included if any part of its range falls within the filter range
+                const hasOverlap = !(tuitionMaxUSD < this.filters.tuition.min || tuitionMinUSD > this.filters.tuition.max);
+                if (!hasOverlap) return false;
                 
                 // Field filter
                 if (this.filters.field.length > 0) {
@@ -389,6 +463,16 @@ class SearchManager {
         return amount * (rates[currency] || 1);
     }
 
+    getLogoUrl(university) {
+        // First priority: Check for local logo file in /icons directory
+        if (university.id) {
+            return `/icons/${university.id}.jpg`;
+        }
+        
+        // Final fallback
+        return null;
+    }
+
     renderResults() {
         // Update counts
         document.getElementById('universityCount').textContent = this.filteredUniversities.length;
@@ -418,57 +502,76 @@ class SearchManager {
         
         container.innerHTML = this.filteredUniversities.map(uni => {
             const tuitionUSD = this.convertToUSD(uni.tuition_range.min, uni.tuition_range.currency);
-            const isBookmarked = this.isBookmarked(uni.id);
             const isAdded = this.isInApplications(uni.id);
+            
+            // Determine color based on fit score
+            let fitColor = '#9ca3af'; // grey for <50
+            if (uni.fitScore >= 85) {
+                fitColor = '#22c55e'; // green for >=85
+            } else if (uni.fitScore >= 50) {
+                fitColor = '#3b82f6'; // blue for 50-84
+            }
+            
+            // Calculate circumference for SVG circle (radius = 20, so circumference = 2 * π * 20 ≈ 125.66)
+            const radius = 20;
+            const circumference = 2 * Math.PI * radius;
+            const offset = circumference - (uni.fitScore / 100) * circumference;
+            
+            // Format degree levels for display
+            const degreeDisplay = uni.degree_levels.map(level => {
+                if (level.toLowerCase().includes('undergraduate')) return 'Undergrad';
+                if (level.toLowerCase().includes('graduate')) return 'Graduate';
+                return level;
+            }).filter((v, i, a) => a.indexOf(v) === i); // Remove duplicates
+            
+            // Combine degree levels and main fields for tags
+            const fieldTags = [...degreeDisplay, ...uni.main_fields.slice(0, 3)];
+            
+            // Get logo URL and create logo HTML
+            const logoUrl = this.getLogoUrl(uni);
+            
+            const logoHTML = logoUrl ? `<img src="${logoUrl}" alt="${uni.name}" class="university-logo-img" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">` : '';
             
             return `
                 <div class="university-card" data-id="${uni.id}">
-                    <div class="card-header-row">
-                        <div class="university-logo">${uni.logo || '🎓'}</div>
-                        <div class="card-header-info">
-                            <h3 class="university-name">${uni.name}</h3>
-                            <p class="university-location">📍 ${uni.city_or_state}, ${uni.country}</p>
-                        </div>
-                        <button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" 
-                                data-id="${uni.id}" 
-                                onclick="searchManager.toggleBookmark('${uni.id}'); event.stopPropagation();">
-                            ${isBookmarked ? '★' : '☆'}
-                        </button>
-                    </div>
-                    
-                    <div class="card-badges">
-                        <span class="card-badge badge-ranking">#${uni.global_ranking} Global</span>
-                        <span class="card-badge badge-fit">${uni.fitScore}% Fit</span>
-                    </div>
-                    
-                    <div class="card-stats">
-                        <div class="stat-item">
-                            <span class="stat-label">Tuition (approx.)</span>
-                            <span class="stat-value">$${Math.round(tuitionUSD).toLocaleString()}/year</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Acceptance Rate</span>
-                            <span class="stat-value">${uni.acceptance_rate}%</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">International Students</span>
-                            <span class="stat-value">${uni.international_student_ratio}%</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-label">Total Students</span>
-                            <span class="stat-value">${(uni.total_students / 1000).toFixed(0)}k+</span>
+                    <div class="card-top-row">
+                        <div class="university-logo">${logoHTML}</div>
+                        <div class="fit-score-wrapper">
+                            <div class="fit-ring-container">
+                                <svg class="fit-ring" width="44" height="44">
+                                    <circle class="fit-ring-bg" cx="22" cy="22" r="${radius}" fill="none" stroke="#e5e7eb" stroke-width="3"/>
+                                    <circle class="fit-ring-progress" cx="22" cy="22" r="${radius}" fill="none" stroke="${fitColor}" stroke-width="3" 
+                                            stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" 
+                                            stroke-linecap="round" transform="rotate(-90 22 22)"/>
+                                </svg>
+                                <span class="fit-ring-text" style="color: ${fitColor}">${uni.fitScore}</span>
+                            </div>
+                            <span class="fit-score-label">Fit score</span>
                         </div>
                     </div>
                     
-                    <p class="card-description">${uni.description || 'Leading university with excellent academic programs and research opportunities.'}</p>
+                    <div class="card-title">
+                        <div class="ranking-row">
+                            <p class="card-ranking">#${uni.global_ranking} Global</p>
+                            ${uni.scholarships && uni.scholarships.length > 0 ? '<span class="scholarship-tag">Scholarship Available!</span>' : ''}
+                        </div>
+                        <h3 class="university-name">${uni.name}</h3>
+                        <p class="university-location">${uni.city_or_state}, ${uni.country}</p>
+                    </div>
                     
-                    <div class="card-actions">
-                        <button class="btn-view-details" onclick="searchManager.viewUniversityDetails('${uni.id}'); event.stopPropagation();">
-                            Learn More
-                        </button>
-                        <button class="btn-add-to-dashboard ${isAdded ? 'added' : ''}" 
+                    <div class="field-tags">
+                        ${fieldTags.map(tag => `<span class="field-tag">${tag}</span>`).join('')}
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="tuition-info">
+                            <span class="tuition-value">$${Math.round(tuitionUSD).toLocaleString()}/year</span>
+                            <span class="tuition-unit">Tuition fees</span>
+                        </div>
+                        <button class="btn-strive ${isAdded ? 'added' : ''}" 
                                 onclick="searchManager.addToApplications('${uni.id}'); event.stopPropagation();">
-                            ${isAdded ? '✓ In My Goals' : 'Strive For It!'}
+                            ${isAdded ? '✓ In My Goals' : 'Strive'}
+                            <span class="arrow">→</span>
                         </button>
                     </div>
                 </div>

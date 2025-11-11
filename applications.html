@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Application Manager - Leaply</title>
     <meta name="description" content="Manage your university applications, track deadlines, and monitor your progress with Leaply's Application Manager.">
     
@@ -15,27 +18,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     
     <!-- Styles -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/applications.css">
+    <link rel="stylesheet" href="src/css/style.css">
+    <link rel="stylesheet" href="src/css/applications.css">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="resources/icon.ico">
+    <link rel="icon" type="image/x-icon" href="/icon.ico">
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <div class="container">
-            <a href="index.html" class="logo">
-                <img src="resources/Logo.png" alt="Leaply Logo" class="logo-image">
+            <a href="/" class="logo">
+                <img src="/Logo.png" alt="Leaply Logo" class="logo-image">
             </a>
             
             <nav class="nav">
                 <ul class="nav-list">
-                    <li><a href="index.html" class="nav-link">Home</a></li>
-                    <li><a href="search.html" class="nav-link">Explore</a></li>
-                    <li><a href="applications.html" class="nav-link active">Applications</a></li>
-                    <li><a href="ai-guide.html" class="nav-link">Persona Lab</a></li>
-                    <li><a href="profile.html" class="btn btn-primary">Dashboard</a></li>
+                    <li><a href="/" class="nav-link">Home</a></li>
+                    <li><a href="/search" class="nav-link">Explore</a></li>
+                    <li><a href="/applications" class="nav-link active">Applications</a></li>
+                    <li><a href="/ai-guide" class="nav-link">Persona Lab</a></li>
+                    <li><a href="/profile" class="btn btn-primary">Dashboard</a></li>
                 </ul>
             </nav>
             
@@ -45,144 +48,116 @@
         <!-- Mobile Navigation -->
         <nav class="mobile-nav">
             <ul class="nav-list">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="search.html" class="nav-link">Explore</a></li>
-                <li><a href="applications.html" class="nav-link active">Applications</a></li>
-                <li><a href="ai-guide.html" class="nav-link">Persona Lab</a></li>
-                <li><a href="profile.html" class="btn btn-primary">Dashboard</a></li>
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/search" class="nav-link">Explore</a></li>
+                <li><a href="/applications" class="nav-link active">Applications</a></li>
+                <li><a href="/ai-guide" class="nav-link">Persona Lab</a></li>
+                <li><a href="/profile" class="btn btn-primary">Dashboard</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Application Dashboard -->
+    <!-- Stats Section (Mobile: under navbar, Desktop: in main content) -->
+    <div class="stats-section-mobile">
+        <div class="stats-grid">
+            <div class="stat-card stat-card-primary">
+                <div class="stat-card-icon">📚</div>
+                <div class="stat-card-content">
+                    <div class="stat-card-value" id="totalApps">5</div>
+                    <div class="stat-card-label">Applications</div>
+                </div>
+            </div>
+            <div class="stat-card stat-card-warning">
+                <div class="stat-card-icon">⏳</div>
+                <div class="stat-card-content">
+                    <div class="stat-card-value" id="inProgressApps">1</div>
+                    <div class="stat-card-label">In Progress</div>
+                </div>
+            </div>
+            <div class="stat-card stat-card-success">
+                <div class="stat-card-icon">✅</div>
+                <div class="stat-card-content">
+                    <div class="stat-card-value" id="completedApps">1</div>
+                    <div class="stat-card-label">Submitted</div>
+                </div>
+            </div>
+            <div class="stat-card stat-card-info">
+                <div class="stat-card-icon">🎯</div>
+                <div class="stat-card-content">
+                    <div class="stat-card-value">3</div>
+                    <div class="stat-card-label">Deadlines This Month</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <aside class="dashboard-sidebar">
+        <aside class="dashboard-sidebar" id="dashboardSidebar">
             <div class="sidebar-header">
-                <h2>My Applications</h2>
-                <button class="btn btn-sm btn-primary" id="addUniversityBtn">
-                    <span>+ Add</span>
-                </button>
+                <h2>Target Universities (5)</h2>
+                <div class="sidebar-header-actions">
+                    <button class="btn btn-sm btn-primary" id="modifyBtn">
+                        <span>✏️</span>
+                    </button>
+                    <button class="sidebar-toggle-mobile" id="sidebarToggle" aria-label="Toggle sidebar">
+                        <span class="toggle-icon">▼</span>
+                    </button>
+                </div>
             </div>
 
             <!-- University List -->
             <div class="sidebar-section">
-                <h3>Target Universities (5)</h3>
-                <div id="universityList" class="university-list">
-                    <!-- Demo University 1: NUS -->
-                    <div class="university-list-item active" data-university-id="nus">
-                        <div class="university-list-item-header">
-                            <div class="university-list-logo">
-                                <img src="resources/icons/nus.jpg" alt="NUS" style="width: 40px; height: 40px; object-fit: cover; border-radius: 6px;">
-                            </div>
-                            <div class="university-list-info">
-                                <p class="university-list-name">National University of Singapore</p>
-                                <p class="university-list-location">Singapore, Singapore</p>
-                            </div>
-                        </div>
-                        <div class="university-list-footer">
-                            <span class="application-status-badge status-in-progress">in progress</span>
-                            <span class="fit-score-mini">85% fit</span>
-                        </div>
-                        <div class="progress-mini" style="margin-top: 0.5rem;">
-                            <div class="progress-mini-fill" style="width: 56%"></div>
-                        </div>
-                    </div>
-
-                    <!-- Demo University 2: MIT -->
-                    <div class="university-list-item" data-university-id="mit">
-                        <div class="university-list-item-header">
-                            <div class="university-list-logo">🎓</div>
-                            <div class="university-list-info">
-                                <p class="university-list-name">Massachusetts Institute of Technology</p>
-                                <p class="university-list-location">Cambridge, USA</p>
-                            </div>
-                        </div>
-                        <div class="university-list-footer">
-                            <span class="application-status-badge status-researching">researching</span>
-                            <span class="fit-score-mini">72% fit</span>
-                        </div>
-                        <div class="progress-mini" style="margin-top: 0.5rem;">
-                            <div class="progress-mini-fill" style="width: 22%"></div>
-                        </div>
-                    </div>
-
-                    <!-- Demo University 3: Stanford -->
-                    <div class="university-list-item" data-university-id="stanford">
-                        <div class="university-list-item-header">
-                            <div class="university-list-logo">�</div>
-                            <div class="university-list-info">
-                                <p class="university-list-name">Stanford University</p>
-                                <p class="university-list-location">Stanford, USA</p>
-                            </div>
-                        </div>
-                        <div class="university-list-footer">
-                            <span class="application-status-badge status-preparing">preparing</span>
-                            <span class="fit-score-mini">78% fit</span>
-                        </div>
-                        <div class="progress-mini" style="margin-top: 0.5rem;">
-                            <div class="progress-mini-fill" style="width: 33%"></div>
-                        </div>
-                    </div>
-
-                    <!-- Demo University 4: Toronto -->
-                    <div class="university-list-item" data-university-id="toronto">
-                        <div class="university-list-item-header">
-                            <div class="university-list-logo">🍁</div>
-                            <div class="university-list-info">
-                                <p class="university-list-name">University of Toronto</p>
-                                <p class="university-list-location">Toronto, Canada</p>
-                            </div>
-                        </div>
-                        <div class="university-list-footer">
-                            <span class="application-status-badge status-submitted">submitted</span>
-                            <span class="fit-score-mini">88% fit</span>
-                        </div>
-                        <div class="progress-mini" style="margin-top: 0.5rem;">
-                            <div class="progress-mini-fill" style="width: 100%"></div>
-                        </div>
-                    </div>
-
-                    <!-- Demo University 5: Melbourne -->
-                    <div class="university-list-item" data-university-id="melbourne">
-                        <div class="university-list-item-header">
-                            <div class="university-list-logo">🦘</div>
-                            <div class="university-list-info">
-                                <p class="university-list-name">University of Melbourne</p>
-                                <p class="university-list-location">Melbourne, Australia</p>
-                            </div>
-                        </div>
-                        <div class="university-list-footer">
-                            <span class="application-status-badge status-not-started">not started</span>
-                            <span class="fit-score-mini">81% fit</span>
-                        </div>
-                        <div class="progress-mini" style="margin-top: 0.5rem;">
-                            <div class="progress-mini-fill" style="width: 0%"></div>
+                <!-- Add University Card (shown in modify mode) -->
+                <div id="addUniversityCard" class="add-university-card" style="display: none;">
+                    <div class="add-university-content">
+                        <div class="add-university-icon">+</div>
+                        <div class="add-university-text">
+                            <h4>Add University</h4>
+                            <p>Click to browse and add universities</p>
                         </div>
                     </div>
                 </div>
-            </div>
+                
+                <div id="universityList" class="university-list">
+                    <!-- Universities will be rendered dynamically from data -->
+                </div>
         </aside>
 
         <!-- Main Content -->
         <main class="dashboard-main">
-            <!-- Overall Quick Stats -->
-            <div class="overall-stats-banner">
-                <div class="stat-item-inline">
-                    <span class="stat-icon-inline">📚</span>
-                    <span><strong id="totalApps">5</strong> Applications</span>
-                </div>
-                <div class="stat-item-inline">
-                    <span class="stat-icon-inline">⏳</span>
-                    <span><strong id="inProgressApps">1</strong> In Progress</span>
-                </div>
-                <div class="stat-item-inline">
-                    <span class="stat-icon-inline">✅</span>
-                    <span><strong id="completedApps">1</strong> Submitted</span>
-                </div>
-                <div class="stat-item-inline">
-                    <span class="stat-icon-inline">🎯</span>
-                    <span><strong>3</strong> Deadlines This Month</span>
+            <!-- Stats Section (Desktop only - hidden on mobile) -->
+            <div class="stats-section-desktop">
+                <div class="stats-grid">
+                    <div class="stat-card stat-card-primary">
+                        <div class="stat-card-icon">📚</div>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value" id="totalAppsDesktop">5</div>
+                            <div class="stat-card-label">Applications</div>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-card-warning">
+                        <div class="stat-card-icon">⏳</div>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value" id="inProgressAppsDesktop">1</div>
+                            <div class="stat-card-label">In Progress</div>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-card-success">
+                        <div class="stat-card-icon">✅</div>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value" id="completedAppsDesktop">1</div>
+                            <div class="stat-card-label">Submitted</div>
+                        </div>
+                    </div>
+                    <div class="stat-card stat-card-info">
+                        <div class="stat-card-icon">🎯</div>
+                        <div class="stat-card-content">
+                            <div class="stat-card-value">3</div>
+                            <div class="stat-card-label">Deadlines This Month</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -197,371 +172,58 @@
                     </div>
                     <h2>Select a University</h2>
                     <p>Choose a university from your list to view details and track your application progress.</p>
-                    <a href="search.html" class="btn btn-primary">Browse Universities</a>
+                    <a href="/search" class="btn btn-primary">Browse Universities</a>
                 </div>
 
-                <!-- University Overview (Demo: NUS) -->
+                <!-- University Overview -->
                 <div id="universityOverview" class="university-overview">
-                    <!-- University Header Section with School Stats -->
+                    <!-- Information Section -->
                     <div class="university-header-section">
                         <!-- University Header -->
                         <div class="university-header">
                         <div class="university-logo-large" id="uniLogoLarge">
-                            <img src="resources/icons/nus.jpg" alt="NUS Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
+                                <img src="/icons/nus.jpg" alt="University Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 8px;">
                         </div>
                         <div class="university-info">
+                                <div class="university-field-badge" id="uniField">Computer Science</div>
                             <h2 id="uniName">National University of Singapore</h2>
                             <p class="university-location" id="uniLocation">📍 Singapore, Singapore</p>
                             <div class="university-badges">
                                 <span class="badge bg-primary" id="uniRanking">#8 Global</span>
-                                <span class="badge bg-success" id="uniFitScore">85% Fit</span>
-                            </div>
-                        </div>
-                        <button class="btn btn-outline-danger btn-sm" id="removeUniversityBtn" title="Remove from applications">
-                            ✕
-                        </button>
-                    </div>
-
-                        <!-- School-Specific Stats Grid -->
-                        <div class="school-stats-grid">
-                            <div class="school-stat-card">
-                                <span class="stat-icon-small">📊</span>
-                                <div class="stat-content">
-                                    <div class="stat-value">56%</div>
-                                    <div class="stat-label-small">Progress</div>
                                 </div>
                             </div>
+                    </div>
+
+                        <!-- Information Stats Grid -->
+                        <div class="school-stats-grid">
                             <div class="school-stat-card">
                                 <span class="stat-icon-small">📅</span>
                                 <div class="stat-content">
-                                    <div class="stat-value">Jan 15, 2026</div>
-                                    <div class="stat-label-small">Deadline</div>
+                                    <div class="stat-value" id="daysLeft">45 days</div>
+                                    <div class="stat-label-small">To nearest deadline</div>
                                 </div>
                             </div>
                             <div class="school-stat-card">
                                 <span class="stat-icon-small">✅</span>
                                 <div class="stat-content">
-                                    <div class="stat-value">5 of 9</div>
+                                    <div class="stat-value" id="requirementsMet">5 of 9</div>
                                     <div class="stat-label-small">Requirements Met</div>
                                 </div>
                             </div>
-                            <div class="school-stat-card">
-                                <span class="stat-icon-small">💵</span>
-                                <div class="stat-content">
-                                    <div class="stat-value">$50</div>
-                                    <div class="stat-label-small">Application Fee</div>
-                                </div>
-                            </div>
                         </div>
                     </div>
-
-                    <!-- Admission Probability -->
-                    <div class="admission-info-section">
-                        <div class="card admission-card">
-                            <h3>Admission Probability</h3>
-                            <div class="admission-content-flex">
-                                <div class="admission-score-circle">
-                                    <svg viewBox="0 0 100 100" class="score-svg">
-                                        <circle class="score-bg" cx="50" cy="50" r="40"></circle>
-                                        <circle class="score-fill" id="scoreFill" cx="50" cy="50" r="40" style="stroke-dashoffset: 63"></circle>
-                                    </svg>
-                                    <div class="score-text">
-                                        <span class="score-number" id="admissionScore">85</span>
-                                        <span class="score-label">%</span>
-                                    </div>
-                                </div>
-                                <div class="admission-factors">
-                                    <h4>Key Factors</h4>
-                                    <div class="factor-list" id="factorList">
-                                        <div class="factor-item">
-                                            <span class="factor-name">
-                                                <span class="factor-indicator positive"></span>
-                                                Your GPA (3.8) exceeds requirement (3.5)
-                                            </span>
-                                            <span class="factor-value">✓</span>
-                                        </div>
-                                        <div class="factor-item">
-                                            <span class="factor-name">
-                                                <span class="factor-indicator positive"></span>
-                                                IELTS 7.5 meets English requirement
-                                            </span>
-                                            <span class="factor-value">✓</span>
-                                        </div>
-                                        <div class="factor-item">
-                                            <span class="factor-name">
-                                                <span class="factor-indicator positive"></span>
-                                                Strong extracurricular activities
-                                            </span>
-                                            <span class="factor-value">Good</span>
-                                        </div>
-                                        <div class="factor-item">
-                                            <span class="factor-name">
-                                                <span class="factor-indicator neutral"></span>
-                                                Lack of research experience
-                                            </span>
-                                            <span class="factor-value">Consider</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Tab Navigation -->
+                    <div class="detail-tabs">
+                        <button class="tab-button active" data-tab="status" id="tabStatus">
+                            Status
+                        </button>
+                        <button class="tab-button" data-tab="info" id="tabInfo">
+                            Uni Info
+                        </button>
                     </div>
 
-                    <!-- Application Progress -->
-                    </div>
-
-                    <!-- Application Progress & Requirements (Merged) -->
-                    <div class="card application-requirements-card">
-                        <div class="card-header-custom">
-                            <div>
-                                <h3>Application Progress & Requirements</h3>
-                                <p style="margin: 0.5rem 0 0 0; color: #6b7280; font-size: 0.875rem;">Track and manage your application documents</p>
-                            </div>
-                            <div style="text-align: right;">
-                                <span class="progress-percentage" id="progressPercentage">56%</span>
-                                <div style="font-size: 0.875rem; color: #6b7280; margin-top: 0.25rem;">5 of 9 completed</div>
-                            </div>
-                        </div>
-                        <div class="progress-bar-custom" style="margin-bottom: 1.5rem;">
-                            <div class="progress-fill" id="progressFill" style="width: 56%"></div>
-                        </div>
-                        
-                        <div class="application-status-selector" style="margin-bottom: 2rem;">
-                            <label>Application Status:</label>
-                            <select id="applicationStatus" class="form-select">
-                                <option value="not-started">Not Started</option>
-                                <option value="researching">Researching</option>
-                                <option value="preparing">Preparing Documents</option>
-                                <option value="in-progress" selected>Application In Progress</option>
-                                <option value="submitted">Submitted</option>
-                                <option value="interview">Interview Stage</option>
-                                <option value="accepted">Accepted</option>
-                                <option value="rejected">Rejected</option>
-                            </select>
-                        </div>
-
-                        <!-- Requirements with Action Buttons -->
-                        <div class="requirements-action-grid">
-                            <!-- Academic Requirements -->
-                            <div class="requirement-action-section">
-                                <h4>📊 Academic Documents</h4>
-                                
-                                <div class="requirement-action-item completed">
-                                    <div class="req-action-left">
-                                        <div class="req-status-icon">✓</div>
-                                        <div class="req-info">
-                                            <div class="req-name">GPA Requirements</div>
-                                            <div class="req-detail">3.5+ GPA verified</div>
-                                        </div>
-                                    </div>
-                                    <button class="btn-action btn-action-view">View</button>
-                                </div>
-
-                                <div class="requirement-action-item completed">
-                                    <div class="req-action-left">
-                                        <div class="req-status-icon">✓</div>
-                                        <div class="req-info">
-                                            <div class="req-name">Official Transcripts</div>
-                                            <div class="req-detail">Uploaded on Oct 15, 2024</div>
-                                        </div>
-                                    </div>
-                                    <button class="btn-action btn-action-view">View</button>
-                                </div>
-                            </div>
-
-                            <!-- Test Scores -->
-                            <div class="requirement-action-section">
-                                <h4>📝 Test Scores</h4>
-                                
-                                <div class="requirement-action-item completed">
-                                    <div class="req-action-left">
-                                        <div class="req-status-icon">✓</div>
-                                        <div class="req-info">
-                                            <div class="req-name">Language Test</div>
-                                            <div class="req-detail">IELTS 7.5 • Valid until 2026</div>
-                                        </div>
-                                    </div>
-                                    <button class="btn-action btn-action-view">View</button>
-                                </div>
-
-                                <div class="requirement-action-item pending">
-                                    <div class="req-action-left">
-                                        <div class="req-status-icon">⏳</div>
-                                        <div class="req-info">
-                                            <div class="req-name">SAT/ACT Scores</div>
-                                            <div class="req-detail">Optional - Not submitted</div>
-                                        </div>
-                                    </div>
-                                    <button class="btn-action btn-action-upload">Upload</button>
-                                </div>
-                            </div>
-
-                            <!-- Personal Documents -->
-                            <div class="requirement-action-section">
-                                <h4>📄 Personal Documents</h4>
-                                
-                                <div class="requirement-action-item completed">
-                                    <div class="req-action-left">
-                                        <div class="req-status-icon">✓</div>
-                                        <div class="req-info">
-                                            <div class="req-name">Personal Statement</div>
-                                            <div class="req-detail">Draft v3 • Last edited Nov 5</div>
-                                        </div>
-                                    </div>
-                                    <button class="btn-action btn-action-edit">Edit</button>
-                                </div>
-
-                                <div class="requirement-action-item completed">
-                                    <div class="req-action-left">
-                                        <div class="req-status-icon">✓</div>
-                                        <div class="req-info">
-                                            <div class="req-name">Recommendation Letters</div>
-                                            <div class="req-detail">2 of 2 received</div>
-                                        </div>
-                                    </div>
-                                    <button class="btn-action btn-action-view">View</button>
-                                </div>
-
-                                <div class="requirement-action-item pending">
-                                    <div class="req-action-left">
-                                        <div class="req-status-icon">⏳</div>
-                                        <div class="req-info">
-                                            <div class="req-name">CV/Resume</div>
-                                            <div class="req-detail">Not uploaded yet</div>
-                                        </div>
-                                    </div>
-                                    <button class="btn-action btn-action-upload">Upload</button>
-                                </div>
-                            </div>
-
-                            <!-- Financial Documents -->
-                            <div class="requirement-action-section">
-                                <h4>💰 Financial & Payment</h4>
-                                
-                                <div class="requirement-action-item pending">
-                                    <div class="req-action-left">
-                                        <div class="req-status-icon">⏳</div>
-                                        <div class="req-info">
-                                            <div class="req-name">Financial Documents</div>
-                                            <div class="req-detail">Bank statement required</div>
-                                        </div>
-                                    </div>
-                                    <button class="btn-action btn-action-upload">Upload</button>
-                                </div>
-
-                                <div class="requirement-action-item pending">
-                                    <div class="req-action-left">
-                                        <div class="req-status-icon">💳</div>
-                                        <div class="req-info">
-                                            <div class="req-name">Application Fee</div>
-                                            <div class="req-detail">$50 USD • Not paid</div>
-                                        </div>
-                                    </div>
-                                    <button class="btn-action btn-action-pay">Pay Now</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quick Info Cards -->                    <!-- Requirements Checklist -->
-                    <div class="card requirements-card">
-                        <div class="card-header-with-progress">
-                            <h3>Application Requirements</h3>
-                            <div class="requirement-progress-indicator">
-                                <span class="progress-text">5 of 9 completed</span>
-                                <div class="mini-progress-bar">
-                                    <div class="mini-progress-fill" style="width: 56%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="requirements-grid">
-                            <!-- Academic Requirements -->
-                            <div class="requirement-section">
-                                <h4>📊 Academic</h4>
-                                <div class="requirement-item">
-                                    <label class="requirement-checkbox">
-                                        <input type="checkbox" class="req-check" data-req="gpa" checked>
-                                        <span class="checkmark"></span>
-                                        <span>GPA Requirements</span>
-                                    </label>
-                                    <span class="requirement-value" id="reqGPA">3.5+ GPA</span>
-                                </div>
-                                <div class="requirement-item">
-                                    <label class="requirement-checkbox">
-                                        <input type="checkbox" class="req-check" data-req="transcripts" checked>
-                                        <span class="checkmark"></span>
-                                        <span>Official Transcripts</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Test Scores -->
-                            <div class="requirement-section">
-                                <h4>� Test Scores</h4>
-                                <div class="requirement-item">
-                                    <label class="requirement-checkbox">
-                                        <input type="checkbox" class="req-check" data-req="language" checked>
-                                        <span class="checkmark"></span>
-                                        <span>Language Test</span>
-                                    </label>
-                                    <span class="requirement-value" id="reqLanguage">IELTS, TOEFL</span>
-                                </div>
-                                <div class="requirement-item">
-                                    <label class="requirement-checkbox">
-                                        <input type="checkbox" class="req-check" data-req="sat">
-                                        <span class="checkmark"></span>
-                                        <span>SAT/ACT Scores</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Documents -->
-                            <div class="requirement-section">
-                                <h4>📄 Documents</h4>
-                                <div class="requirement-item">
-                                    <label class="requirement-checkbox">
-                                        <input type="checkbox" class="req-check" data-req="essays" checked>
-                                        <span class="checkmark"></span>
-                                        <span>Personal Essays</span>
-                                    </label>
-                                </div>
-                                <div class="requirement-item">
-                                    <label class="requirement-checkbox">
-                                        <input type="checkbox" class="req-check" data-req="recommendations" checked>
-                                        <span class="checkmark"></span>
-                                        <span>Recommendation Letters</span>
-                                    </label>
-                                </div>
-                                <div class="requirement-item">
-                                    <label class="requirement-checkbox">
-                                        <input type="checkbox" class="req-check" data-req="cv">
-                                        <span class="checkmark"></span>
-                                        <span>CV/Resume</span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <!-- Financial -->
-                            <div class="requirement-section">
-                                <h4>💰 Financial</h4>
-                                <div class="requirement-item">
-                                    <label class="requirement-checkbox">
-                                        <input type="checkbox" class="req-check" data-req="financial">
-                                        <span class="checkmark"></span>
-                                        <span>Financial Documents</span>
-                                    </label>
-                                </div>
-                                <div class="requirement-item">
-                                    <label class="requirement-checkbox">
-                                        <input type="checkbox" class="req-check" data-req="fee">
-                                        <span class="checkmark"></span>
-                                        <span>Application Fee Paid</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <!-- Tab Content: Uni Info -->
+                    <div id="tabContentInfo" class="tab-content">
                     <!-- Quick Info Cards -->
                         <div class="info-cards-grid">
                         <div class="info-card">
@@ -590,6 +252,87 @@
                             <div class="info-content">
                                 <span class="info-label">Total Students</span>
                                 <span class="info-value" id="infoStudents">38,000+</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab Content: Status -->
+                    <div id="tabContentStatus" class="tab-content active">
+                        <!-- Admission Probability -->
+                        <div class="admission-info-section">
+                            <div class="card admission-card">
+                                <div class="admission-card-header">
+                                    <h3>Admission Probability</h3>
+                                    <button id="admissionActionBtn" class="btn-action-admission" style="display: none;">
+                                        Action <span>></span>
+                                    </button>
+                                </div>
+                                <div class="admission-content-flex">
+                                    <div class="admission-score-circle">
+                                        <svg viewBox="0 0 100 100" class="score-svg">
+                                            <circle class="score-bg" cx="50" cy="50" r="40"></circle>
+                                            <circle class="score-fill" id="scoreFill" cx="50" cy="50" r="40" style="stroke-dashoffset: 63"></circle>
+                                        </svg>
+                                        <div class="score-text">
+                                            <span class="score-number" id="admissionScore">85</span>
+                                            <span class="score-label">%</span>
+                                        </div>
+                                    </div>
+                                    <div class="admission-factors">
+                                        <h4>Key Factors</h4>
+                                        <div class="factor-list" id="factorList">
+                                            <!-- Factors will be rendered dynamically -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Application Progress & Requirements -->
+                        <div class="card application-requirements-card">
+                            <div class="card-header-custom">
+                                <h3>Application Details</h3>
+                                <div class="application-status-selector">
+                                    <label for="applicationStatus">Current Step:</label>
+                                    <select id="applicationStatus" class="form-select application-step-select">
+                                        <option value="planning-phase">Step 1: Planning Phase</option>
+                                        <option value="exploring-programs">Step 2: Exploring Programs</option>
+                                        <option value="gathering-documents">Step 3: Gathering Documents</option>
+                                        <option value="submitting-application" selected>Step 4: Submitting Application</option>
+                                        <option value="application-submitted">Step 5: Application Submitted</option>
+                                        <option value="interview-scheduled">Step 6: Interview Scheduled</option>
+                                        <option value="offer-received">Step 7: Offer Received</option>
+                                        <option value="not-accepted">Step 8: Not Accepted</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Requirements: Todo and Completed -->
+                            <div class="requirements-todo-completed">
+                                <!-- Todo Section -->
+                                <div class="requirements-section-todo">
+                                    <h4 class="section-title-todo">
+                                        <span class="todo-icon">📋</span>
+                                        <span class="section-title-text">Todo</span>
+                                        <span class="section-count-badge todo-count" id="todoCountBadge">0</span>
+                                    </h4>
+                                    <div class="todo-list" id="todoList">
+                                        <!-- Todo items will be rendered dynamically -->
+                                    </div>
+                                </div>
+
+                                <!-- Completed Section -->
+                                <div class="requirements-section-completed">
+                                    <h4 class="section-title-completed">
+                                        <span class="completed-icon">✅</span>
+                                        <span class="section-title-text">Completed</span>
+                                        <span class="section-count-badge completed-count" id="completedCountBadge">0</span>
+                                    </h4>
+                                    <div class="completed-list" id="completedList">
+                                        <!-- Completed items will be rendered dynamically -->
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -602,12 +345,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     
     <!-- Data Service -->
-    <script src="js/services/dataService.js"></script>
+    <script src="src/js/services/dataService.js"></script>
     
     <!-- Main JavaScript -->
-    <script src="js/main.js"></script>
+    <script src="src/js/main.js"></script>
     
     <!-- Applications Page JavaScript -->
-    <script src="js/applications.js"></script>
+    <script src="src/js/applications.js"></script>
 </body>
 </html>

@@ -39,7 +39,7 @@
       "living_cost_index": 95,
       "city_safety_score": 85,
       "climate": "Continental",
-      "logo": "🎓",
+      "logo": "https://www.topuniversities.com/sites/default/files/harvard-university_253_medium.jpg",
       "featured": true,
       "description": "World-renowned Ivy League institution offering exceptional programs across all disciplines with generous financial aid."
     },
@@ -81,9 +81,79 @@
       "living_cost_index": 98,
       "city_safety_score": 88,
       "climate": "Mediterranean",
-      "logo": "🌲",
+      "logo": "https://www.topuniversities.com/sites/default/files/stanford-university_573_medium.jpg",
       "featured": true,
-      "description": "Leading innovation hub in Silicon Valley, known for entrepreneurship and cutting-edge technology programs."
+      "description": "Leading innovation hub in Silicon Valley, known for entrepreneurship and cutting-edge technology programs.",
+      "onTrack": true,
+      "application_tracking": {
+        "status": "gathering-documents",
+        "progress": 33,
+        "fitScore": 78,
+        "requirements": {
+          "academic": [
+            {
+              "name": "GPA Requirements",
+              "status": "completed",
+              "detail": "3.9+ GPA verified",
+              "action": "View"
+            },
+            {
+              "name": "Official Transcripts",
+              "status": "completed",
+              "detail": "Uploaded on Oct 15, 2024",
+              "action": "View"
+            }
+          ],
+          "test_scores": [
+            {
+              "name": "Language Test",
+              "status": "completed",
+              "detail": "IELTS 7.5 • Valid until 2026",
+              "action": "View"
+            },
+            {
+              "name": "SAT/ACT Scores",
+              "status": "pending",
+              "detail": "Optional - Not submitted",
+              "action": "Upload"
+            }
+          ],
+          "personal": [
+            {
+              "name": "Personal Statement",
+              "status": "pending",
+              "detail": "Not started",
+              "action": "Edit"
+            },
+            {
+              "name": "Recommendation Letters",
+              "status": "pending",
+              "detail": "0 of 2 received",
+              "action": "View"
+            },
+            {
+              "name": "CV/Resume",
+              "status": "pending",
+              "detail": "Not uploaded yet",
+              "action": "Upload"
+            }
+          ],
+          "financial": [
+            {
+              "name": "Financial Documents",
+              "status": "pending",
+              "detail": "Bank statement required",
+              "action": "Upload"
+            },
+            {
+              "name": "Application Fee",
+              "status": "pending",
+              "detail": "$50 USD • Not paid",
+              "action": "Pay Now"
+            }
+          ]
+        }
+      }
     },
     {
       "id": "uni-003",
@@ -123,9 +193,79 @@
       "living_cost_index": 95,
       "city_safety_score": 85,
       "climate": "Continental",
-      "logo": "⚙️",
+      "logo": "https://www.topuniversities.com/sites/default/files/massachusetts-institute-of-technology-mit_410_medium.jpg",
       "featured": true,
-      "description": "World's premier technology and engineering school, leading in innovation and scientific research."
+      "description": "World's premier technology and engineering school, leading in innovation and scientific research.",
+      "onTrack": true,
+      "application_tracking": {
+        "status": "exploring-programs",
+        "progress": 22,
+        "fitScore": 72,
+        "requirements": {
+          "academic": [
+            {
+              "name": "GPA Requirements",
+              "status": "completed",
+              "detail": "3.9+ GPA verified",
+              "action": "View"
+            },
+            {
+              "name": "Official Transcripts",
+              "status": "pending",
+              "detail": "Not uploaded yet",
+              "action": "Upload"
+            }
+          ],
+          "test_scores": [
+            {
+              "name": "Language Test",
+              "status": "completed",
+              "detail": "TOEFL 95 • Valid until 2025",
+              "action": "View"
+            },
+            {
+              "name": "SAT/ACT Scores",
+              "status": "pending",
+              "detail": "Required - Not submitted",
+              "action": "Upload"
+            }
+          ],
+          "personal": [
+            {
+              "name": "Personal Statement",
+              "status": "pending",
+              "detail": "Not started",
+              "action": "Edit"
+            },
+            {
+              "name": "Recommendation Letters",
+              "status": "pending",
+              "detail": "0 of 2 received",
+              "action": "View"
+            },
+            {
+              "name": "CV/Resume",
+              "status": "pending",
+              "detail": "Not uploaded yet",
+              "action": "Upload"
+            }
+          ],
+          "financial": [
+            {
+              "name": "Financial Documents",
+              "status": "pending",
+              "detail": "Bank statement required",
+              "action": "Upload"
+            },
+            {
+              "name": "Application Fee",
+              "status": "pending",
+              "detail": "$75 USD • Not paid",
+              "action": "Pay Now"
+            }
+          ]
+        }
+      }
     },
     {
       "id": "uni-004",
@@ -166,7 +306,7 @@
       "living_cost_index": 82,
       "city_safety_score": 90,
       "climate": "Temperate",
-      "logo": "🏛️",
+      "logo": "https://www.topuniversities.com/sites/default/files/university-of-oxford_478_medium.jpg",
       "featured": true,
       "description": "Historic university with over 900 years of academic excellence, offering world-class undergraduate and graduate programs."
     },
@@ -208,7 +348,7 @@
       "living_cost_index": 80,
       "city_safety_score": 92,
       "climate": "Temperate",
-      "logo": "📚",
+      "logo": "https://www.topuniversities.com/sites/default/files/university-of-cambridge_95_medium.jpg",
       "featured": false,
       "description": "One of the world's oldest universities, renowned for scientific research and academic excellence."
     },
@@ -250,9 +390,79 @@
       "living_cost_index": 70,
       "city_safety_score": 87,
       "climate": "Continental",
-      "logo": "🍁",
+      "logo": "https://www.topuniversities.com/sites/default/files/university-of-toronto_619_medium.jpg",
       "featured": true,
-      "description": "Leading Canadian research university with diverse programs and strong international student support services."
+      "description": "Leading Canadian research university with diverse programs and strong international student support services.",
+      "onTrack": true,
+      "application_tracking": {
+        "status": "application-submitted",
+        "progress": 100,
+        "fitScore": 88,
+        "requirements": {
+          "academic": [
+            {
+              "name": "GPA Requirements",
+              "status": "completed",
+              "detail": "3.5+ GPA verified",
+              "action": "View"
+            },
+            {
+              "name": "Official Transcripts",
+              "status": "completed",
+              "detail": "Uploaded on Sep 20, 2024",
+              "action": "View"
+            }
+          ],
+          "test_scores": [
+            {
+              "name": "Language Test",
+              "status": "completed",
+              "detail": "IELTS 7.0 • Valid until 2026",
+              "action": "View"
+            },
+            {
+              "name": "SAT/ACT Scores",
+              "status": "completed",
+              "detail": "SAT 1450 • Submitted",
+              "action": "View"
+            }
+          ],
+          "personal": [
+            {
+              "name": "Personal Statement",
+              "status": "completed",
+              "detail": "Final version • Submitted",
+              "action": "View"
+            },
+            {
+              "name": "Recommendation Letters",
+              "status": "completed",
+              "detail": "2 of 2 received",
+              "action": "View"
+            },
+            {
+              "name": "CV/Resume",
+              "status": "completed",
+              "detail": "Uploaded on Sep 25, 2024",
+              "action": "View"
+            }
+          ],
+          "financial": [
+            {
+              "name": "Financial Documents",
+              "status": "completed",
+              "detail": "Bank statement uploaded",
+              "action": "View"
+            },
+            {
+              "name": "Application Fee",
+              "status": "completed",
+              "detail": "$180 CAD • Paid on Sep 28, 2024",
+              "action": "View"
+            }
+          ]
+        }
+      }
     },
     {
       "id": "uni-007",
@@ -291,7 +501,7 @@
       "living_cost_index": 100,
       "city_safety_score": 95,
       "climate": "Temperate",
-      "logo": "⚡",
+      "logo": "https://www.topuniversities.com/sites/default/files/eth-zurich-swiss-federal-institute-of-technology_201_medium.jpg",
       "featured": false,
       "description": "Switzerland's premier science and technology university with very low tuition and high research output."
     },
@@ -332,9 +542,79 @@
       "living_cost_index": 75,
       "city_safety_score": 98,
       "climate": "Tropical",
-      "logo": "🦁",
+      "logo": "https://www.topuniversities.com/sites/default/files/national-university-of-singapore-nus_443_medium.jpg",
       "featured": false,
-      "description": "Asia's leading university with strong global connections and excellent career prospects."
+      "description": "Asia's leading university with strong global connections and excellent career prospects.",
+      "onTrack": true,
+      "application_tracking": {
+        "status": "submitting-application",
+        "progress": 56,
+        "fitScore": 85,
+        "requirements": {
+          "academic": [
+            {
+              "name": "GPA Requirements",
+              "status": "completed",
+              "detail": "3.5+ GPA verified",
+              "action": "View"
+            },
+            {
+              "name": "Official Transcripts",
+              "status": "completed",
+              "detail": "Uploaded on Oct 15, 2024",
+              "action": "View"
+            }
+          ],
+          "test_scores": [
+            {
+              "name": "Language Test",
+              "status": "completed",
+              "detail": "IELTS 7.5 • Valid until 2026",
+              "action": "View"
+            },
+            {
+              "name": "SAT/ACT Scores",
+              "status": "pending",
+              "detail": "Optional - Not submitted",
+              "action": "Upload"
+            }
+          ],
+          "personal": [
+            {
+              "name": "Personal Statement",
+              "status": "completed",
+              "detail": "Draft v3 • Last edited Nov 5",
+              "action": "Edit"
+            },
+            {
+              "name": "Recommendation Letters",
+              "status": "completed",
+              "detail": "2 of 2 received",
+              "action": "View"
+            },
+            {
+              "name": "CV/Resume",
+              "status": "pending",
+              "detail": "Not uploaded yet",
+              "action": "Upload"
+            }
+          ],
+          "financial": [
+            {
+              "name": "Financial Documents",
+              "status": "pending",
+              "detail": "Bank statement required",
+              "action": "Upload"
+            },
+            {
+              "name": "Application Fee",
+              "status": "pending",
+              "detail": "$50 USD • Not paid",
+              "action": "Pay Now"
+            }
+          ]
+        }
+      }
     },
     {
       "id": "uni-009",
@@ -374,9 +654,79 @@
       "living_cost_index": 78,
       "city_safety_score": 85,
       "climate": "Temperate",
-      "logo": "🎭",
+      "logo": "https://www.topuniversities.com/sites/default/files/211118103607am165180PRIMARY-A-A4-Vertical-Housed-RGB-200px-90x90.jpg",
       "featured": false,
-      "description": "Australia's top university known for research excellence and vibrant campus culture."
+      "description": "Australia's top university known for research excellence and vibrant campus culture.",
+      "onTrack": true,
+      "application_tracking": {
+        "status": "planning-phase",
+        "progress": 0,
+        "fitScore": 81,
+        "requirements": {
+          "academic": [
+            {
+              "name": "GPA Requirements",
+              "status": "pending",
+              "detail": "3.3+ GPA required",
+              "action": "View"
+            },
+            {
+              "name": "Official Transcripts",
+              "status": "pending",
+              "detail": "Not uploaded yet",
+              "action": "Upload"
+            }
+          ],
+          "test_scores": [
+            {
+              "name": "Language Test",
+              "status": "pending",
+              "detail": "IELTS 6.5+ required",
+              "action": "Upload"
+            },
+            {
+              "name": "SAT/ACT Scores",
+              "status": "pending",
+              "detail": "Not required",
+              "action": "View"
+            }
+          ],
+          "personal": [
+            {
+              "name": "Personal Statement",
+              "status": "pending",
+              "detail": "Not started",
+              "action": "Edit"
+            },
+            {
+              "name": "Recommendation Letters",
+              "status": "pending",
+              "detail": "0 of 2 received",
+              "action": "View"
+            },
+            {
+              "name": "CV/Resume",
+              "status": "pending",
+              "detail": "Not uploaded yet",
+              "action": "Upload"
+            }
+          ],
+          "financial": [
+            {
+              "name": "Financial Documents",
+              "status": "pending",
+              "detail": "Bank statement required",
+              "action": "Upload"
+            },
+            {
+              "name": "Application Fee",
+              "status": "pending",
+              "detail": "$100 AUD • Not paid",
+              "action": "Pay Now"
+            }
+          ]
+        }
+      }
     },
     {
       "id": "uni-010",
@@ -415,7 +765,7 @@
       "living_cost_index": 72,
       "city_safety_score": 90,
       "climate": "Continental",
-      "logo": "🔧",
+      "logo": "https://www.topuniversities.com/sites/default/files/technical-university-of-munich_599_medium.jpg",
       "featured": false,
       "description": "Germany's top technical university with no tuition fees and strong industry connections."
     },
@@ -456,7 +806,7 @@
       "living_cost_index": 80,
       "city_safety_score": 95,
       "climate": "Humid subtropical",
-      "logo": "🗾",
+      "logo": "https://www.topuniversities.com/sites/default/files/the-university-of-tokyo_615_medium.jpg",
       "featured": false,
       "description": "Japan's most prestigious university, leading in science and technology research."
     },
@@ -497,7 +847,7 @@
       "living_cost_index": 95,
       "city_safety_score": 80,
       "climate": "Temperate",
-      "logo": "👑",
+      "logo": "https://www.topuniversities.com/sites/default/files/240430033452pm869301QS-Imperial-Logo-white-text-blue-background-90x90.jpg",
       "featured": false,
       "description": "London's science and technology powerhouse with strong industry links and research excellence."
     },
@@ -539,7 +889,7 @@
       "living_cost_index": 75,
       "city_safety_score": 70,
       "climate": "Continental",
-      "logo": "🦅",
+      "logo": "https://www.topuniversities.com/sites/default/files/yale-university_684_medium.jpg",
       "featured": false,
       "description": "Ivy League institution renowned for liberal arts education and professional schools."
     },
@@ -581,7 +931,7 @@
       "living_cost_index": 75,
       "city_safety_score": 88,
       "climate": "Temperate oceanic",
-      "logo": "🏔️",
+      "logo": "https://www.topuniversities.com/sites/default/files/university-of-british-columbia_70_medium.jpg",
       "featured": false,
       "description": "Canada's global university in beautiful Vancouver, strong in sustainability and research."
     },
@@ -623,7 +973,7 @@
       "living_cost_index": 65,
       "city_safety_score": 88,
       "climate": "Continental",
-      "logo": "🐻",
+      "logo": "https://www.topuniversities.com/sites/default/files/cornell-university_143_medium.jpg",
       "featured": false,
       "description": "Ivy League university combining private and public mission, known for diverse programs."
     },
@@ -665,7 +1015,7 @@
       "living_cost_index": 85,
       "city_safety_score": 92,
       "climate": "Subtropical",
-      "logo": "🏙️",
+      "logo": "https://www.topuniversities.com/sites/default/files/250912101330am198735HKUcolour-low-resolution-90x90.jpg",
       "featured": false,
       "description": "Hong Kong's oldest university, gateway between East and West with strong English education."
     },
@@ -707,7 +1057,7 @@
       "living_cost_index": 95,
       "city_safety_score": 75,
       "climate": "Mediterranean",
-      "logo": "🐻",
+      "logo": "https://www.topuniversities.com/sites/default/files/university-of-california-berkeley-ucb_84_medium.jpg",
       "featured": false,
       "description": "Premier public university known for academic excellence, innovation, and social activism."
     },
@@ -748,7 +1098,7 @@
       "living_cost_index": 68,
       "city_safety_score": 93,
       "climate": "Humid continental",
-      "logo": "🏯",
+      "logo": "https://www.topuniversities.com/sites/default/files/graduate-school-of-business-seoul-national-university_553_medium.jpg",
       "featured": false,
       "description": "South Korea's most prestigious university, leading in technology and innovation."
     },
@@ -790,7 +1140,7 @@
       "living_cost_index": 82,
       "city_safety_score": 88,
       "climate": "Temperate oceanic",
-      "logo": "🌷",
+      "logo": "https://www.topuniversities.com/sites/default/files/vrije-universiteit-amsterdam_658_medium.jpg",
       "featured": false,
       "description": "Netherlands' largest university with strong international focus and English-taught programs."
     },
@@ -831,7 +1181,7 @@
       "living_cost_index": 60,
       "city_safety_score": 90,
       "climate": "Humid continental",
-      "logo": "🏛️",
+      "logo": "https://www.topuniversities.com/sites/default/files/tsinghua-university_626_medium.jpg",
       "featured": false,
       "description": "China's most prestigious university, leading in engineering and technology education."
     }
