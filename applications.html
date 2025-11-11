@@ -38,7 +38,7 @@
                     <li><a href="/search" class="nav-link">Explore</a></li>
                     <li><a href="/applications" class="nav-link active">Applications</a></li>
                     <li><a href="/ai-guide" class="nav-link">Persona Lab</a></li>
-                    <li><a href="/profile" class="btn btn-primary">Dashboard</a></li>
+                    <li><a href="/dashboard" class="nav-link">Dashboard</a></li>
                 </ul>
             </nav>
             
@@ -52,46 +52,12 @@
                 <li><a href="/search" class="nav-link">Explore</a></li>
                 <li><a href="/applications" class="nav-link active">Applications</a></li>
                 <li><a href="/ai-guide" class="nav-link">Persona Lab</a></li>
-                <li><a href="/profile" class="btn btn-primary">Dashboard</a></li>
+                <li><a href="/dashboard" class="nav-link">Dashboard</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Application Dashboard -->
-    <!-- Stats Section (Mobile: under navbar, Desktop: in main content) -->
-    <div class="stats-section-mobile">
-        <div class="stats-grid">
-            <div class="stat-card stat-card-primary">
-                <div class="stat-card-icon">📚</div>
-                <div class="stat-card-content">
-                    <div class="stat-card-value" id="totalApps">5</div>
-                    <div class="stat-card-label">Applications</div>
-                </div>
-            </div>
-            <div class="stat-card stat-card-warning">
-                <div class="stat-card-icon">⏳</div>
-                <div class="stat-card-content">
-                    <div class="stat-card-value" id="inProgressApps">1</div>
-                    <div class="stat-card-label">In Progress</div>
-                </div>
-            </div>
-            <div class="stat-card stat-card-success">
-                <div class="stat-card-icon">✅</div>
-                <div class="stat-card-content">
-                    <div class="stat-card-value" id="completedApps">1</div>
-                    <div class="stat-card-label">Submitted</div>
-                </div>
-            </div>
-            <div class="stat-card stat-card-info">
-                <div class="stat-card-icon">🎯</div>
-                <div class="stat-card-content">
-                    <div class="stat-card-value">3</div>
-                    <div class="stat-card-label">Deadlines This Month</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Application Manager -->
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="dashboard-sidebar" id="dashboardSidebar">
@@ -127,40 +93,6 @@
 
         <!-- Main Content -->
         <main class="dashboard-main">
-            <!-- Stats Section (Desktop only - hidden on mobile) -->
-            <div class="stats-section-desktop">
-                <div class="stats-grid">
-                    <div class="stat-card stat-card-primary">
-                        <div class="stat-card-icon">📚</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="totalAppsDesktop">5</div>
-                            <div class="stat-card-label">Applications</div>
-                        </div>
-                    </div>
-                    <div class="stat-card stat-card-warning">
-                        <div class="stat-card-icon">⏳</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="inProgressAppsDesktop">1</div>
-                            <div class="stat-card-label">In Progress</div>
-                        </div>
-                    </div>
-                    <div class="stat-card stat-card-success">
-                        <div class="stat-card-icon">✅</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value" id="completedAppsDesktop">1</div>
-                            <div class="stat-card-label">Submitted</div>
-                        </div>
-                    </div>
-                    <div class="stat-card stat-card-info">
-                        <div class="stat-card-icon">🎯</div>
-                        <div class="stat-card-content">
-                            <div class="stat-card-value">3</div>
-                            <div class="stat-card-label">Deadlines This Month</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- University Detail View -->
             <div id="universityDetailView" class="university-detail-view">
                 <!-- Empty State -->

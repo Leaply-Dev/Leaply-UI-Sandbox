@@ -10,6 +10,7 @@ export default defineConfig({
         search: resolve(__dirname, 'search.html'),
         applications: resolve(__dirname, 'applications.html'),
         'ai-guide': resolve(__dirname, 'ai-guide.html'),
+        dashboard: resolve(__dirname, 'dashboard.html'),
       },
     },
   },
