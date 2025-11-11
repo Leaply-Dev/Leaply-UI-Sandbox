@@ -34,7 +34,7 @@ class DataService {
    */
   async loadUniversities() {
     try {
-      const response = await fetch('/src/data/universities.json');
+      const response = await fetch('/assets/data/universities.json');
       if (!response.ok) throw new Error('Failed to load universities');
       const data = await response.json();
       this.universities = data.universities;
@@ -50,7 +50,7 @@ class DataService {
    */
   async loadScholarships() {
     try {
-      const response = await fetch('/src/data/scholarships.json');
+      const response = await fetch('/assets/data/scholarships.json');
       if (!response.ok) throw new Error('Failed to load scholarships');
       const data = await response.json();
       this.scholarships = data.scholarships;
